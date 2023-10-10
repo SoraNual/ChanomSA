@@ -1,0 +1,208 @@
+.root {
+    -fx-background-color: -background-color;
+}
+
+.label {
+    -fx-text-fill: -text-color;
+}
+
+.list-view {
+    -fx-border-color: none;
+    -fx-background-color: -listview-color;
+    -fx-background-radius: 13px;
+    -fx-border-radius: 13px;
+}
+
+.list-view .list-cell{
+    -fx-background-color: -listview-color;
+    -fx-border-color: none;
+    -fx-text-fill: -text-color;
+    -fx-background-insets: 2px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.list-view .list-cell:selected{
+    -fx-background-color: -hover-button-color;
+}
+
+.list-view:vertical .virtual-flow .scroll-bar:vertical .thumb {
+    -fx-background-color: -text-color;
+}
+
+.list-view:vertical .virtual-flow .scroll-bar:vertical .decrement-button .decrement-arrow {
+    visibility: false;
+}
+
+.list-view:vertical .virtual-flow .scroll-bar:vertical .increment-button .increment-arrow {
+    visibility: false;
+}
+
+.list-view:vertical .virtual-flow .scroll-bar:vertical .track {
+    -fx-background-color: -hover-button-color;
+    -fx-background-radius: 13px;
+}
+
+.list-view:vertical .virtual-flow .scroll-bar:vertical .track-background {
+    -fx-background-color: -hover-button-color;
+}
+
+.combo-box {
+    -fx-background-color: -input-color;
+    -fx-text-fill: -text-color;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: none;
+}
+
+.combo-box .list-cell {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: -input-color;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: -text-color;
+}
+
+.combo-box .list-cell:focused:selected:filled{
+    -fx-text-fill: -text-color;
+    -fx-background-radius: 3px;
+}
+
+.combo-box .list-view:vertical .virtual-flow .list-cell {
+    -fx-background-color: -input-color;
+    -fx-text-fill: -text-color;
+    -fx-border-color: none;
+}
+
+.combo-box .list-view:vertical .virtual-flow .list-cell:hover {
+    -fx-background-color: -hover-button-color;
+}
+
+.text-field {
+    -fx-background-color: -input-color;
+    -fx-text-fill: -text-color;
+    -fx-background-radius: 5px;
+}
+
+.button {
+    -fx-background-color: -button-color;
+    -fx-text-fill: -text-color;
+    -fx-background-radius: 10px;
+}
+
+.button:hover {
+    -fx-background-color: -hover-button-color;
+}
+
+.scroll-pane {
+    -fx-background-color: none;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: none;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: -button-color;
+
+}
+
+.scroll-pane .scroll-bar:vertical .increment-button .increment-arrow{
+   visibility: false;
+
+}
+
+.scroll-pane .scroll-bar:vertical .decrement-button .decrement-arrow {
+    visibility: false;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: -menu-bar-text-color;
+}
+
+.user-menu-bar {
+    -fx-fill: -menu-bar-color;
+    -fx-background-color: -menu-bar-color;
+}
+
+.user-menu-bar-button {
+    -fx-background-color: -menu-bar-color;
+    -fx-text-fill: -menu-bar-text-color;
+}
+
+.user-menu-bar-button:hover {
+    -fx-background-color: -hover-menu-bar-color;
+}
+
+.user-menu-bar-label {
+    -fx-text-fill: -menu-bar-text-color;
+}
+
+.text-area {
+    -fx-background-color: -input-color;
+    -fx-background-radius: 10px;
+    -fx-text-fill: -text-color;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+#errorLabel {
+    -fx-text-fill: red;
+    }
+
+#successBtn {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+}
+
+#dangerBtn {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+}
+
+#dangerBtn:hover {
+    -fx-background-color: #d32535;
+}
+
+#warningBtn  {
+    -fx-background-color: #ffc107;
+    -fx-text-fill: white;
+}
+#warningBtn:hover  {
+    -fx-background-color: #edb100;
+}
+#dangerBtn:hover {
+    -fx-background-color: #d32535;
+}
+.check-box {
+    -fx-text-fill: -text-color;
+}
+
+.check-box:determinate .box {
+    -fx-background-color: -input-color;
+}
+
+.check-box:determinate .box .mark:selected {
+    -fx-background-color: -text-color;
+}
+
+.tab-pane:top .tab-header-area .tab-header-background {
+    -fx-background-color: none;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:top {
+    -fx-background-color: -input-color;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .tab-label {
+    -fx-text-fill: -text-color;
+}

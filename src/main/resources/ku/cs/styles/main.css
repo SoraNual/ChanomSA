@@ -1,0 +1,94 @@
+.button {
+    -fx-background-color: #02b572;
+}
+
+.button:hover {
+    -fx-background-color: #1CCF8C;
+}
+
+.button:pressed {
+    -fx-background-color: #02b572;
+    -fx-font-weight: bold;
+}
+
+.report-item {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 7;
+}
+
+.white-background {
+    -fx-background-color: #ffffff;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 13;
+    -fx-border-color: #011627;
+    -fx-border-radius: 13;
+}
+
+#inProgressButton {
+    -fx-background-color: #ff9f1c;
+    -fx-text-fill: #ffffff;
+}
+
+#inProgressButton:hover #inProgressButton:pressed {
+    -fx-background-color: #c77c17;
+}
+
+#finishButton {
+    -fx-background-color: #076e68;
+    -fx-text-fill: #ffffff;
+}
+
+#finishButton:hover {
+    -fx-background-color: #065752;
+}
+
+#backButton {
+    -fx-background-color: #E71D36;
+    -fx-text-fill: #ffffff;
+}
+
+#backButton:hover {
+    -fx-background-color: #ad182a;
+}
+
+#sideButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #ffffff;
+}
+
+#sideButton:hover #sideButton:pressed {
+    -fx-background-color: rgba(1, 22, 39, 0.58);
+}
+
+.text-area {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 13;
+    -fx-border-color: #011627;
+    -fx-border-radius: 13;
+    -fx-border-width: 2;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.list-cell {
+    -fx-font-size: 13px;
+}
+
