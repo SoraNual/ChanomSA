@@ -2,12 +2,8 @@ package ku.cs.form.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
 
-public class MenuPageController {
-
-    @FXML
-    private AnchorPane scenePane;
+public class AddMenuPageController {
 
     @FXML
     public void initialize(){
@@ -16,16 +12,6 @@ public class MenuPageController {
 
     }
 
-
-    //AddMenu button
-    @FXML
-    public void handleAddMenuButton(ActionEvent actionEvent){
-        try {
-            com.github.saacsos.FXRouter.goTo("add-menu");
-        } catch (Exception err){
-            System.out.println("Can't go to add-menu");
-        }
-    }
     //back button
     @FXML
     public void handleBackButton(ActionEvent actionEvent){
