@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class AddMenuPageController {
+    private DatabaseConnection databaseConnection;
+
     @FXML
     private TextField nameTextField;
 
@@ -38,19 +40,21 @@ public class AddMenuPageController {
         double price = Double.parseDouble(priceTextField.getText());
         String type = typeComboBox.getValue().toString();
 
-        // เชื่อมต่อกับฐานข้อมูล testbubbletea
-        Connection connection = DatabaseConnection.getConnection();
+        // เชื่อมต่อฐานข้อมูล
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            // เขียนคำสั่ง SQL สำหรับ INSERT ข้อมูล
+            String insertSQL = "INSERT INTO menus (menu_type, menu_name, menu_price) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+                preparedStatement.setString(1, type);
+                preparedStatement.setString(2, name);
+                preparedStatement.setDouble(3, price);
+                // ทำการ INSERT ข้อมูล
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        // ดำเนินการเพิ่มเมนูลงในฐานข้อมูล testbubbletea
-        String sql = "INSERT INTO menus (type,name, price) VALUES (?, ?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, type);
-        preparedStatement.setString(2, name);
-        preparedStatement.setDouble(3, price);
-        preparedStatement.executeUpdate();
-
-        // ปิดการเชื่อมต่อ
-        connection.close();
     }
 
     //back button

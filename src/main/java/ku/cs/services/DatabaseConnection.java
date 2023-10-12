@@ -7,12 +7,10 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
+    private static final String URL = "jdbc:mysql://localhost:3306/testbubbletea";
+    private static final String USERNAME = "root";
+
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/testbubbletea";
-        String username = "root";
-        String password = "";
-
-        return DriverManager.getConnection(url, username, password);
+        return DriverManager.getConnection(URL, USERNAME, null);
     }
-
 }
