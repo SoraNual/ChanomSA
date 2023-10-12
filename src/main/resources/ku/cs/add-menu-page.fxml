@@ -5,12 +5,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.form.controllers.AddMenuPageController">
    <children>
       <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
-      <ComboBox layoutX="662.0" layoutY="289.0" prefWidth="150.0" />
-      <TextField layoutX="663.0" layoutY="239.0" promptText="ชื่อเครื่องดื่ม" />
-      <TextField layoutX="663.0" layoutY="342.0" promptText="ราคา" />
+      <ComboBox fx:id="typeComboBox" layoutX="662.0" layoutY="289.0" prefWidth="150.0" />
+      <TextField fx:id="nameTextField" layoutX="663.0" layoutY="239.0" promptText="ชื่อเครื่องดื่ม" />
+      <TextField fx:id="priceTextField" layoutX="663.0" layoutY="342.0" promptText="ราคา" />
+      <Button layoutX="670.0" layoutY="414.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="25.0" prefWidth="95.0" text="ยืนยัน" />
    </children>
 </AnchorPane>
