@@ -1,5 +1,5 @@
 package ku.cs.models;
 
 public enum MenuType {
-    ชา, กาแฟ, โซดา
+    ชา, กาแฟ, โซดา,โกโก้นม
 }

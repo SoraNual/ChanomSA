@@ -9,10 +9,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import ku.cs.models.MenuType;
+import ku.cs.models.MenuTypeList;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
+import java.util.Objects;
 
 public class AddMenuPageController {
     private DatabaseConnection databaseConnection;
@@ -29,7 +32,9 @@ public class AddMenuPageController {
     @FXML
     public void initialize(){
         //setup
-        ObservableList<MenuType> menuTypes = FXCollections.observableArrayList(MenuType.ชา, MenuType.กาแฟ, MenuType.โซดา);
+        MenuTypeList menuTypeList = new MenuTypeList();
+
+        ObservableList<MenuType> menuTypes = FXCollections.observableArrayList(MenuType.ชา, MenuType.กาแฟ, MenuType.โซดา ,MenuType.โกโก้นม);
         typeComboBox.setItems(menuTypes);
     }
 
@@ -42,6 +47,10 @@ public class AddMenuPageController {
 
         // เชื่อมต่อฐานข้อมูล
         try (Connection connection = DatabaseConnection.getConnection()) {
+            if (Objects.equals(name, "")){
+                System.out.println("Input Error");
+                return;
+            }
             // เขียนคำสั่ง SQL สำหรับ INSERT ข้อมูล
             String insertSQL = "INSERT INTO menus (menu_type, menu_name, menu_price) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -50,6 +59,11 @@ public class AddMenuPageController {
                 preparedStatement.setDouble(3, price);
                 // ทำการ INSERT ข้อมูล
                 preparedStatement.executeUpdate();
+                //clear
+                System.out.println("เพี่มเมนู "+name+" ประเภท "+type+" ราคา "+price);
+                nameTextField.setText("");
+                priceTextField.setText("");
+                typeComboBox.cancelEdit();
             }
         } catch (SQLException e) {
             e.printStackTrace();
