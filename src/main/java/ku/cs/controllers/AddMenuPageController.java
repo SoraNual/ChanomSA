@@ -1,4 +1,4 @@
-package ku.cs.form.controllers;
+package ku.cs.controllers;
 
 import java.sql.*;
 
@@ -14,7 +14,6 @@ import ku.cs.services.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.List;
 import java.util.Objects;
 
 public class AddMenuPageController {

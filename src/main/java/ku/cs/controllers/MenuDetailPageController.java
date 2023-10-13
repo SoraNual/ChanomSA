@@ -1,4 +1,4 @@
-package ku.cs.form.controllers;
+package ku.cs.controllers;
 
 public class MenuDetailPageController {
 }
