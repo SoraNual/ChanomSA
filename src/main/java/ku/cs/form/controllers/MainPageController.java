@@ -26,6 +26,15 @@ public class MainPageController {
             System.out.println("Can't go to MenuPage");
         }
     }
+    //go to topping page
+    @FXML
+    public void handleToppingPageButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("topping");
+        } catch (Exception err){
+            System.out.println("Can't go to MenuPage");
+        }
+    }
 
 
 

@@ -4,13 +4,23 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.form.controllers.AddMenuPageController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.form.controllers.AddMenuPageController">
    <children>
-      <Button layoutX="24.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+      <Pane layoutX="251.0" layoutY="131.0" prefHeight="491.0" prefWidth="812.0" styleClass="pane-mid" stylesheets="@styles/chanom.css" />
       <ComboBox fx:id="typeComboBox" layoutX="662.0" layoutY="289.0" prefWidth="150.0" />
       <TextField fx:id="nameTextField" layoutX="663.0" layoutY="239.0" promptText="ชื่อเครื่องดื่ม" />
       <TextField fx:id="priceTextField" layoutX="663.0" layoutY="342.0" promptText="ราคา" />
       <Button layoutX="670.0" layoutY="414.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="25.0" prefWidth="95.0" text="ยืนยัน" />
+      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+         <children>
+            <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+         </children>
+      </Pane>
+      <Text layoutX="623.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อ" />
+      <Text layoutX="623.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ประเภท" />
+      <Text layoutX="625.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ราคา" />
    </children>
 </AnchorPane>
