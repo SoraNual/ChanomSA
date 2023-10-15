@@ -24,6 +24,7 @@ public class ProjectApplication extends Application {
         FXRouter.when("add-menu", packageStr+"add-menu-page.fxml");
         FXRouter.when("topping", packageStr+"topping-page.fxml");
         FXRouter.when("topping-detail", packageStr+"topping-detail-page.fxml");
+        FXRouter.when("add-topping", packageStr+"add-topping-page.fxml");
 
 
     }

@@ -1,0 +1,21 @@
+.button {
+    -fx-background-color: #d9d9d9;
+}
+
+.button:hover {
+    -fx-background-color: #c7c5c5;
+}
+
+.button:pressed {
+    -fx-background-color: #b4b7b6;
+    -fx-font-weight: bold;
+}
+.anchor-pane{
+    -fx-background-color: #a9a8e7;
+}
+.pane-top{
+    -fx-background-color: #6461ff;
+}
+.pane-mid{
+    -fx-background-color: #c7c6ff;
+}

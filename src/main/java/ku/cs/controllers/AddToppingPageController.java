@@ -1,4 +1,4 @@
-package ku.cs.controllers;
+package ku.cs.form.controllers;
 
 import java.sql.*;
 
@@ -14,9 +14,10 @@ import ku.cs.services.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.Objects;
 
-public class AddMenuPageController {
+public class AddToppingPageController {
     private DatabaseConnection databaseConnection;
 
     @FXML
@@ -25,16 +26,12 @@ public class AddMenuPageController {
     @FXML
     private TextField priceTextField;
 
-    @FXML
-    private ComboBox typeComboBox;
+
 
     @FXML
     public void initialize(){
         //setup
-        MenuTypeList menuTypeList = new MenuTypeList();
 
-        ObservableList<MenuType> menuTypes = FXCollections.observableArrayList(MenuType.ชา, MenuType.กาแฟ, MenuType.โซดา ,MenuType.โกโก้นม);
-        typeComboBox.setItems(menuTypes);
     }
 
     @FXML
@@ -42,7 +39,7 @@ public class AddMenuPageController {
         // อ่านข้อมูลเมนูจาก fxml
         String name = nameTextField.getText();
         double price = Double.parseDouble(priceTextField.getText());
-        String type = typeComboBox.getValue().toString();
+
 
         // เชื่อมต่อฐานข้อมูล
         try (Connection connection = DatabaseConnection.getConnection()) {
@@ -53,16 +50,14 @@ public class AddMenuPageController {
             // เขียนคำสั่ง SQL สำหรับ INSERT ข้อมูล
             String insertSQL = "INSERT INTO menus (menu_type, menu_name, menu_price) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-                preparedStatement.setString(1, type);
-                preparedStatement.setString(2, name);
-                preparedStatement.setDouble(3, price);
+                preparedStatement.setString(1, name);
+                preparedStatement.setDouble(2, price);
                 // ทำการ INSERT ข้อมูล
                 preparedStatement.executeUpdate();
                 //clear
-                System.out.println(">> เพี่มเมนู "+name+" ประเภท "+type+" ราคา "+price);
+                System.out.println(">> เพี่มเมนู "+name+" "+" ราคา "+price);
                 nameTextField.setText("");
                 priceTextField.setText("");
-                typeComboBox.cancelEdit();
                 gotoMenuPage();
             }
         } catch (SQLException e) {
