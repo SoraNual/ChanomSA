@@ -19,12 +19,16 @@ public class ProjectApplication extends Application {
         String packageStr = "ku/cs/";
 
         FXRouter.when("main", packageStr+"main-page.fxml");
+
         FXRouter.when("menu", packageStr+"menu-page.fxml");
         FXRouter.when("menu-detail", packageStr+"menu-detail-page.fxml");
         FXRouter.when("add-menu", packageStr+"add-menu-page.fxml");
+
         FXRouter.when("topping", packageStr+"topping-page.fxml");
         FXRouter.when("topping-detail", packageStr+"topping-detail-page.fxml");
         FXRouter.when("add-topping", packageStr+"add-topping-page.fxml");
+
+        FXRouter.when("create-order", packageStr+"create-order-page.fxml");
 
 
     }

@@ -1,4 +1,4 @@
-package ku.cs.form.controllers;
+package ku.cs.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
