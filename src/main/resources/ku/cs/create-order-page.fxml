@@ -1,16 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.CreateOrderPageController">
    <children>
-      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+      <Pane layoutX="564.0" layoutY="77.0" prefHeight="623.0" prefWidth="700.0" styleClass="pane-frame">
+         <children>
+            <Pane layoutX="45.0" layoutY="56.0" prefHeight="511.0" prefWidth="265.0" styleClass="pane-inFrame1" />
+            <Label layoutX="362.0" layoutY="67.0" text="ชื่อชา" />
+            <Label layoutX="362.0" layoutY="111.0" text="ประเภท :" />
+            <Label layoutX="409.0" layoutY="111.0" text="type" />
+            <Label layoutX="362.0" layoutY="153.0" text="ราคา :" />
+            <Label layoutX="406.0" layoutY="153.0" text="price" />
+            <Label layoutX="374.0" layoutY="337.0" text="ท็อปปิ้ง" />
+            <ComboBox layoutX="375.0" layoutY="369.0" prefWidth="150.0" />
+            <Button layoutX="450.0" layoutY="490.0" mnemonicParsing="false" text="-" />
+            <Button layoutX="541.0" layoutY="490.0" mnemonicParsing="false" text="+" />
+            <Label layoutX="484.0" layoutY="494.0" text="amount" />
+            <Button layoutX="505.0" layoutY="535.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
+            <Button layoutX="341.0" layoutY="535.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยกเลิก" />
+         </children>
+      </Pane>
+      <Pane layoutX="559.0" layoutY="85.0" prefHeight="621.0" prefWidth="709.0" visible="false">
+         <children>
+            <TableView fx:id="menuTable" layoutX="29.0" layoutY="214.0" prefHeight="362.0" prefWidth="652.0">
+               <columns>
+                  <TableColumn fx:id="nameColumn" prefWidth="126.0" text="C1" />
+                  <TableColumn fx:id="nameColumn1" prefWidth="126.0" text="รูป" />
+               </columns>
+            </TableView>
+            <Button layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleAllButton" prefHeight="40.0" prefWidth="90.0" text="all" />
+            <Button layoutX="136.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleTeaButton" prefHeight="40.0" prefWidth="90.0" text="ชา" />
+            <Button layoutX="248.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleCoffeeButton" prefHeight="40.0" prefWidth="90.0" text="กาแฟ" />
+            <Button layoutX="366.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleSodaButton" prefHeight="40.0" prefWidth="90.0" text="โซดา" />
+            <Button layoutX="483.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleCocaoButton" prefHeight="40.0" prefWidth="90.0" text="โกโก้" />
+            <Button layoutX="594.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleMilkButton" prefHeight="40.0" prefWidth="90.0" text="นมสด" />
+         </children>
+      </Pane>
+      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top">
          <children>
             <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
          </children>
       </Pane>
+      <Pane layoutX="22.0" layoutY="134.0" prefHeight="566.0" prefWidth="525.0" styleClass="pane-frame" />
+      <Pane layoutX="58.0" layoutY="172.0" prefHeight="338.0" prefWidth="460.0" styleClass="pane-inFrame2">
+         <children>
+            <Pane layoutX="21.0" layoutY="14.0" prefHeight="40.0" prefWidth="419.0" styleClass="pane-frame">
+               <children>
+                  <Label layoutX="24.0" layoutY="12.0" text="จำนวน" />
+                  <Label layoutX="105.0" layoutY="12.0" text="เมนู" />
+                  <Label layoutX="301.0" layoutY="12.0" text="ราคา" />
+               </children>
+            </Pane>
+            <Pane layoutX="21.0" layoutY="268.0" prefHeight="40.0" prefWidth="419.0" styleClass="pane-frame">
+               <children>
+                  <Text layoutX="116.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Label layoutX="297.0" layoutY="12.0" text="0" />
+                  <Label layoutX="110.0" layoutY="12.0" text="50" />
+                  <Label layoutX="21.0" layoutY="12.0" text="Total" />
+               </children>
+            </Pane>
+            <TableView layoutX="21.0" layoutY="54.0" prefHeight="214.0" prefWidth="419.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Button layoutX="43.0" layoutY="602.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="clear" />
+      <Button layoutX="259.0" layoutY="602.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยกเลิก" />
+      <Button layoutX="408.0" layoutY="602.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
    </children>
 </AnchorPane>

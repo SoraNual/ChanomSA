@@ -17,20 +17,16 @@ public class Menu {
         this.menu_price = price;
     }
 
-    public int getId() {
+    public int getMenu_id() {
         return menu_id;
     }
 
-
-    public String getName() {
+    public String getMenu_name() {
         return menu_name;
     }
 
-    public void setName(String name) {
-        this.menu_name = name;
-    }
 
-    public String getType() {
+    public String getMenu_type() {
         return menu_type;
     }
 
@@ -38,12 +34,8 @@ public class Menu {
         this.menu_type = type;
     }
 
-    public double getMenuPrice() {
+    public double getMenu_price() {
         return menu_price;
-    }
-
-    public void setMenuPrice(double price) {
-        this.menu_price = price;
     }
 
 }

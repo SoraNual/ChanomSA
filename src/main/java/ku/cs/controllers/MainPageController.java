@@ -10,13 +10,21 @@ public class MainPageController {
 
     @FXML
     public void initialize(){
-
+        System.out.println("-------MainPage------");
         //setup
 
     }
 
 
-
+    //go to create-order page
+    @FXML
+    public void handleCreateOrderPageButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("create-order");
+        } catch (Exception err){
+            System.out.println("Can't go to CreateOrderPage");
+        }
+    }
     //go to menu page
     @FXML
     public void handleMenuPageButton(ActionEvent actionEvent){

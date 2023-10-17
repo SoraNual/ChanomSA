@@ -9,7 +9,7 @@
    <children>
       <Button layoutX="43.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="115.0" prefWidth="324.0" text="เพิ่มเมนู" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
-      <TableView fx:id="menuTable" layoutX="525.0" layoutY="177.0" prefHeight="200.0" prefWidth="227.0">
+      <TableView fx:id="menuTable" layoutX="525.0" layoutY="177.0" prefHeight="411.0" prefWidth="297.0">
         <columns>
             <TableColumn fx:id="typeColumn" prefWidth="75.0" text="type" />
             <TableColumn fx:id="nameColumn" prefWidth="75.0" text="name" />

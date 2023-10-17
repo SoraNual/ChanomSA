@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import ku.cs.models.Menu;
 import ku.cs.services.DatabaseConnection;
@@ -33,41 +34,10 @@ public class MenuPageController {
 
     public void initialize() {
         System.out.println("-------MenuPage------");
-        // Initialize the table columns
-        // Set the cell factory for each TableColumn object
-        typeColumn.setCellFactory(column -> new TableCell<Menu, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item != null) {
-                    setText(item);
-                }
-            }
-        });
-
-        nameColumn.setCellFactory(column -> new TableCell<Menu, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item != null) {
-                    setText(item);
-                }
-            }
-        });
-
-        priceColumn.setCellFactory(column -> new TableCell<Menu, Double>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item != null) {
-                    setText(item.toString());
-                }
-            }
-        });
-
+        // Set cell value factories
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("menu_type"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("menu_price"));
 
 
         // Retrieve menu items from the database and display in the table

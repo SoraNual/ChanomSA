@@ -1,5 +1,6 @@
 package ku.cs.controllers;
 
+import java.awt.geom.QuadCurve2D;
 import java.sql.*;
 
 import javafx.collections.FXCollections;
@@ -7,7 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import ku.cs.models.Menu;
 import ku.cs.models.MenuType;
 import ku.cs.models.MenuTypeList;
 import ku.cs.services.DatabaseConnection;
@@ -27,14 +30,18 @@ public class AddMenuPageController {
 
     @FXML
     private ComboBox typeComboBox;
+    @FXML
+    private Label notification;
 
     @FXML
     public void initialize(){
         //setup
+        System.out.println("-------AddMenuPage------");
         MenuTypeList menuTypeList = new MenuTypeList();
 
-        ObservableList<MenuType> menuTypes = FXCollections.observableArrayList(MenuType.ชา, MenuType.กาแฟ, MenuType.โซดา ,MenuType.โกโก้นม);
+        ObservableList<MenuType> menuTypes = FXCollections.observableArrayList(MenuType.ชา, MenuType.กาแฟ, MenuType.โซดา ,MenuType.โกโก้,MenuType.นม);
         typeComboBox.setItems(menuTypes);
+        notification.setVisible(false);
     }
 
     @FXML
@@ -43,13 +50,48 @@ public class AddMenuPageController {
         String name = nameTextField.getText();
         double price = Double.parseDouble(priceTextField.getText());
         String type = typeComboBox.getValue().toString();
+        // check input
+        if (Objects.equals(name, "")){
+            notification.setVisible(true);
+            notification.setText("ชื่อเมนูไม่ถูกต้อง");
+            System.out.println("Input Error");
+            return;
+        }
+        try {
+            double priceValue = Double.parseDouble(priceTextField.getText());
+            System.out.println("Price as a double: " + priceValue);
+        } catch (NumberFormatException e) {
+            notification.setVisible(true);
+            notification.setText("ราคาไม่ถูกต้อง");
+            System.err.println("Invalid price format: " + priceTextField.getText());
+            return;
+        }
 
         // เชื่อมต่อฐานข้อมูล
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            if (Objects.equals(name, "")){
-                System.out.println("Input Error");
-                return;
+        try  {
+            Connection connection = DatabaseConnection.getConnection();
+            String query = "SELECT menu_id, menu_type, menu_name, menu_price FROM menus";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String menuType = resultSet.getString("menu_type");
+                String menuName = resultSet.getString("menu_name");
+                if (Objects.equals(name, menuName)){
+                    notification.setVisible(true);
+                    notification.setText("ชื่อเมนู \""+name+"\" มีอยู่ในระบบแล้ว");
+                    System.out.println("Repeat Name");
+                    return;
+                }
+
             }
+
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+
             // เขียนคำสั่ง SQL สำหรับ INSERT ข้อมูล
             String insertSQL = "INSERT INTO menus (menu_type, menu_name, menu_price) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {

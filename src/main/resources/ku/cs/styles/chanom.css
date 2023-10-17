@@ -11,11 +11,17 @@
     -fx-font-weight: bold;
 }
 .anchor-pane{
-    -fx-background-color: #a9a8e7;
+    -fx-background-color: #8886ff;
 }
 .pane-top{
     -fx-background-color: #6461ff;
 }
-.pane-mid{
+.pane-frame{
     -fx-background-color: #c7c6ff;
+}
+.pane-inFrame1{
+    -fx-background-color: #a9a8e7;
+}
+.pane-inFrame2{
+    -fx-background-color: #8b9fe4;
 }

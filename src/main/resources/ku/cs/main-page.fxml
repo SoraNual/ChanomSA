@@ -4,11 +4,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MainPageController">
    <children>
       <Button layoutX="640.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleMenuPageButton" prefHeight="65.0" prefWidth="135.0" text="เมนูทั้งหมด" />
       <Pane layoutX="48.0" layoutY="112.0" prefHeight="565.0" prefWidth="567.0" />
       <Button layoutX="640.0" layoutY="386.0" mnemonicParsing="false" onAction="#handleToppingPageButton" prefHeight="65.0" prefWidth="135.0" text="ท็อปปิ้งทั้งหมด" />
+      <Button layoutX="734.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleCreateOrderPageButton" prefHeight="164.0" prefWidth="514.0" text="สร้างคำสั่งซื้อ" />
+      <Pane layoutX="58.0" layoutY="172.0" prefHeight="263.0" prefWidth="460.0" />
    </children>
 </AnchorPane>
