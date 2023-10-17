@@ -1,5 +1,10 @@
+.root {
+   -main-bkg-color: #8886FF;
+ }
+
 .button {
     -fx-background-color: #d9d9d9;
+    -fx-background-radius: 10px;
 }
 
 .button:hover {
@@ -13,6 +18,12 @@
 .anchor-pane{
     -fx-background-color: #8886ff;
 }
+
+.pane-background {
+    -fx-fill: -main-bkg-color;
+    -fx-background-color: -main-bkg-color;
+}
+
 .pane-top{
     -fx-background-color: #6461ff;
 }
@@ -25,3 +36,5 @@
 .pane-inFrame2{
     -fx-background-color: #8b9fe4;
 }
+
+
