@@ -11,21 +11,23 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.CreateOrderPageController">
    <children>
-      <Pane layoutX="564.0" layoutY="77.0" prefHeight="623.0" prefWidth="700.0" styleClass="pane-frame">
+      <Pane fx:id="addMenuPane" layoutX="564.0" layoutY="77.0" prefHeight="623.0" prefWidth="700.0" styleClass="pane-frame">
          <children>
             <Pane layoutX="45.0" layoutY="56.0" prefHeight="511.0" prefWidth="265.0" styleClass="pane-inFrame1" />
             <Label layoutX="362.0" layoutY="67.0" text="ชื่อชา" />
             <Label layoutX="362.0" layoutY="111.0" text="ประเภท :" />
-            <Label layoutX="409.0" layoutY="111.0" text="type" />
+            <Label fx:id="typeLabel" layoutX="409.0" layoutY="111.0" text="typeLabel" />
             <Label layoutX="362.0" layoutY="153.0" text="ราคา :" />
-            <Label layoutX="406.0" layoutY="153.0" text="price" />
+            <Label fx:id="priceLabel" layoutX="406.0" layoutY="153.0" text="priceLabel" />
             <Label layoutX="374.0" layoutY="337.0" text="ท็อปปิ้ง" />
-            <ComboBox layoutX="375.0" layoutY="369.0" prefWidth="150.0" />
-            <Button layoutX="450.0" layoutY="490.0" mnemonicParsing="false" text="-" />
-            <Button layoutX="541.0" layoutY="490.0" mnemonicParsing="false" text="+" />
-            <Label layoutX="484.0" layoutY="494.0" text="amount" />
+            <ComboBox fx:id="toppingComboBox" layoutX="375.0" layoutY="369.0" prefWidth="150.0" />
+            <Button layoutX="449.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleMinusQuantityButton" text="-" />
+            <Button layoutX="513.0" layoutY="421.0" mnemonicParsing="false" onAction="#handlePlusQuantityButton" text="+" />
+            <Label fx:id="quantityLabel" layoutX="488.0" layoutY="433.0" text="quantityLabel" />
             <Button layoutX="505.0" layoutY="535.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
             <Button layoutX="341.0" layoutY="535.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยกเลิก" />
+            <Label fx:id="nameLabel" layoutX="412.0" layoutY="67.0" text="nameLabel" />
+            <Label fx:id="totalLabel" layoutX="415.0" layoutY="499.0" text="totalLabel" />
          </children>
       </Pane>
       <Pane layoutX="559.0" layoutY="85.0" prefHeight="621.0" prefWidth="709.0" visible="false">

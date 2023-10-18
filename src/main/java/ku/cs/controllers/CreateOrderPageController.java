@@ -1,13 +1,15 @@
 package ku.cs.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import ku.cs.models.Menu;
+import ku.cs.models.MenuType;
+import ku.cs.models.Topping;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.Connection;
@@ -23,6 +25,22 @@ public class CreateOrderPageController {
     private TableView<Menu> menuTable;
     @FXML
     private TableColumn<Menu, String> nameColumn;
+    // addMenuPane
+    @FXML
+    private Pane addMenuPane;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label typeLabel;
+    @FXML
+    private Label priceLabel;
+    @FXML
+    private ComboBox toppingComboBox;
+    @FXML
+    private Label quantityLabel;
+    @FXML
+    private Label totalLabel;
+
 
     private String typeToShow ;
     public void initialize() {
@@ -30,6 +48,12 @@ public class CreateOrderPageController {
         System.out.println("-------CreateOrderPage------");
         typeToShow = "All";
         updateDatabase();
+        setupTopping();
+        //addMenuPane.setVisible(false);
+        quantityLabel.setText("1");
+
+
+
 
 
 
@@ -76,6 +100,72 @@ public class CreateOrderPageController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    private void setupTopping(){
+        List<String> toppingList = new ArrayList<>();
+
+        String query = "SELECT topping_id, topping_name, topping_price FROM toppings";
+
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            System.out.println("--Update Topping to set--");
+            while (resultSet.next()) {
+                int toppingId = resultSet.getInt("topping_id");
+                String toppingName = resultSet.getString("topping_name");
+                double toppingPrice = resultSet.getDouble("topping_price");
+                toppingList.add(toppingName);
+
+                System.out.println(" "+toppingName+" ");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ObservableList<String> allToppingList = FXCollections.observableArrayList(toppingList);
+        toppingComboBox.setItems(allToppingList);
+    }
+    @FXML
+    public void handleOpenPaneButton(ActionEvent actionEvent){
+
+
+    }
+    @FXML
+    public void handlePlusQuantityButton(ActionEvent actionEvent) {
+        int currentQuantity = Integer.parseInt(quantityLabel.getText());
+
+        if (currentQuantity < 5) {
+            currentQuantity++;
+        }
+
+
+        quantityLabel.setText(Integer.toString(currentQuantity));
+        updatePriceWithTopping(currentQuantity);
+    }
+    @FXML
+    public void handleMinusQuantityButton(ActionEvent actionEvent) {
+        // Get the current value of the quantityLabel
+        int currentQuantity = Integer.parseInt(quantityLabel.getText());
+
+        // Ensure the quantity doesn't go below zero
+        if (currentQuantity > 1) {
+            currentQuantity--;
+        }
+
+        // Update the text of the quantityLabel with the new value
+        quantityLabel.setText(Integer.toString(currentQuantity));
+        updatePriceWithTopping(currentQuantity);
+    }
+    private void updatePriceWithTopping(int currentQuantity ){
+        int price;
+        price = currentQuantity;
+        totalLabel.setText("รวม :"+price+" บาท");
     }
     @FXML
     public void handleAllButton(ActionEvent actionEvent){
