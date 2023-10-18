@@ -19,6 +19,10 @@
     -fx-background-color: #8886ff;
 }
 
+.curve{
+    -fx-background-radius: 10px;
+}
+
 .pane-background {
     -fx-fill: -main-bkg-color;
     -fx-background-color: -main-bkg-color;
