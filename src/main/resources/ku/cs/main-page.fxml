@@ -13,5 +13,6 @@
       <Button layoutX="640.0" layoutY="386.0" mnemonicParsing="false" onAction="#handleToppingPageButton" prefHeight="65.0" prefWidth="135.0" text="ท็อปปิ้งทั้งหมด" />
       <Button layoutX="734.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleCreateOrderPageButton" prefHeight="164.0" prefWidth="514.0" text="สร้างคำสั่งซื้อ" />
       <Pane layoutX="58.0" layoutY="172.0" prefHeight="263.0" prefWidth="460.0" />
+      <Button layoutX="804.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleMemberPageButton" prefHeight="65.0" prefWidth="135.0" text="รายชื่อสมาชิก" />
    </children>
 </AnchorPane>

@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MemberPageController">
    <children>
       <Pane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background">
@@ -37,6 +36,9 @@
             <Button layoutX="26.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="146.0" text="เพิ่มสมาชิก" />
          </children>
       </Pane>
-      <Pane layoutY="-3.0" prefHeight="151.0" prefWidth="1280.0" styleClass="pane-top" />
+      <Pane layoutY="-3.0" prefHeight="151.0" prefWidth="1280.0" styleClass="pane-top">
+         <children>
+            <Button layoutX="24.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="56.0" prefWidth="146.0" text="&lt; กลับ" />
+         </children></Pane>
    </children>
 </AnchorPane>

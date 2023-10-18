@@ -40,7 +40,16 @@ public class MainPageController {
         try {
             com.github.saacsos.FXRouter.goTo("topping");
         } catch (Exception err){
-            System.out.println("Can't go to MenuPage");
+            System.out.println("Can't go to ToppingPage");
+        }
+    }
+
+    @FXML
+    public void handleMemberPageButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("member");
+        } catch (Exception err){
+            System.out.println("Can't go to memberPage");
         }
     }
 

@@ -69,4 +69,13 @@ public class MemberPageController {
         }
     }
 
+    @FXML
+    public void handleBackButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("main");
+        } catch (Exception err){
+            System.out.println("Can't go to main");
+        }
+    }
+
 }
