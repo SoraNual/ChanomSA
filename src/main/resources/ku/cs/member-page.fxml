@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MemberPageController">
+   <children>
+      <Pane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background">
+         <children>
+            <Pane layoutX="194.0" layoutY="165.0" prefHeight="518.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
+               <styleClass>
+                  <String fx:value="pane-frame" />
+                  <String fx:value="curve" />
+               </styleClass>
+               <children>
+                  <Label layoutX="41.0" layoutY="23.0" text="รายชื่อสมาชิกทั้งหมด">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TableView fx:id="memberTable" layoutX="224.0" layoutY="231.0" prefHeight="420.0" prefWidth="991.0" styleClass="curve" stylesheets="@styles/chanom.css">
+              <columns>
+                <TableColumn fx:id="IDColumn" prefWidth="116.0" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="490.0" text="ชื่อ-นามสกุล" />
+                  <TableColumn fx:id="phoneColumn" prefWidth="387.0" text="เบอร์โทรศัพท์" />
+              </columns>
+            </TableView>
+            <Button layoutX="26.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="146.0" text="เพิ่มสมาชิก" />
+         </children>
+      </Pane>
+      <Pane layoutY="-3.0" prefHeight="151.0" prefWidth="1280.0" styleClass="pane-top" />
+   </children>
+</AnchorPane>

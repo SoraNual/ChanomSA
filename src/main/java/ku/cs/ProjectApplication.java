@@ -13,7 +13,7 @@ public class ProjectApplication extends Application {
         stage.setResizable(false);
         FXRouter.bind(this, stage, "Drink Store Management", 1280, 720);
         configRoute();
-        FXRouter.goTo("main");
+        FXRouter.goTo("member");
     }
     private static void configRoute() {
         String packageStr = "ku/cs/";
@@ -30,7 +30,8 @@ public class ProjectApplication extends Application {
 
         FXRouter.when("create-order", packageStr+"create-order-page.fxml");
 
-
+        FXRouter.when("member", packageStr+"member-page.fxml");
+        FXRouter.when("add-member", packageStr+"add-member-page.fxml");
     }
 
     public static void main(String[] args) {
