@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import ku.cs.models.MenuType;
-import ku.cs.models.MenuTypeList;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.Connection;
@@ -76,7 +75,7 @@ public class AddToppingPageController {
     @FXML
     public void handleBackButton(ActionEvent actionEvent){
         try {
-            com.github.saacsos.FXRouter.goTo("main");
+            com.github.saacsos.FXRouter.goTo("topping");
         } catch (Exception err){
             System.out.println("Can't go back");
         }

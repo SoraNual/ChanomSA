@@ -7,11 +7,12 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.CreateOrderPageController">
    <children>
-      <Pane fx:id="addMenuPane" layoutX="564.0" layoutY="77.0" prefHeight="623.0" prefWidth="700.0" styleClass="pane-frame">
+      <Pane fx:id="addMenuPane" layoutX="564.0" layoutY="77.0" prefHeight="623.0" prefWidth="700.0" styleClass="pane-frame" visible="false">
          <children>
             <Pane layoutX="45.0" layoutY="56.0" prefHeight="511.0" prefWidth="265.0" styleClass="pane-inFrame1" />
             <Label layoutX="362.0" layoutY="67.0" text="ชื่อชา" />
@@ -20,22 +21,27 @@
             <Label layoutX="362.0" layoutY="153.0" text="ราคา :" />
             <Label fx:id="priceLabel" layoutX="406.0" layoutY="153.0" text="priceLabel" />
             <Label layoutX="374.0" layoutY="337.0" text="ท็อปปิ้ง" />
-            <ComboBox fx:id="toppingComboBox" layoutX="375.0" layoutY="369.0" prefWidth="150.0" />
+            <ComboBox fx:id="toppingComboBox" layoutX="375.0" layoutY="369.0" onAction="#updatePriceWithToppingAction" prefWidth="150.0" promptText="ไม่ใส่ท็อปปิ้ง" />
             <Button layoutX="449.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleMinusQuantityButton" text="-" />
             <Button layoutX="513.0" layoutY="421.0" mnemonicParsing="false" onAction="#handlePlusQuantityButton" text="+" />
             <Label fx:id="quantityLabel" layoutX="488.0" layoutY="433.0" text="quantityLabel" />
-            <Button layoutX="505.0" layoutY="535.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
-            <Button layoutX="341.0" layoutY="535.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยกเลิก" />
+            <Button layoutX="505.0" layoutY="535.0" mnemonicParsing="false" onAction="#handleAcceptMenuButton" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
+            <Button layoutX="341.0" layoutY="535.0" mnemonicParsing="false" onAction="#handleCancelMenuButton" prefHeight="40.0" prefWidth="120.0" text="ยกเลิก" />
             <Label fx:id="nameLabel" layoutX="412.0" layoutY="67.0" text="nameLabel" />
-            <Label fx:id="totalLabel" layoutX="415.0" layoutY="499.0" text="totalLabel" />
+            <Label fx:id="totalLabel" layoutX="405.0" layoutY="490.0" text="รวม : 35 บาท">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
          </children>
       </Pane>
-      <Pane layoutX="559.0" layoutY="85.0" prefHeight="621.0" prefWidth="709.0" visible="false">
+      <Pane fx:id="chooseMenuPane" layoutX="560.0" layoutY="78.0" prefHeight="621.0" prefWidth="709.0">
          <children>
+            <Pane layoutY="100.0" prefHeight="521.0" prefWidth="709.0" styleClass="pane-frame" />
             <TableView fx:id="menuTable" layoutX="29.0" layoutY="214.0" prefHeight="362.0" prefWidth="652.0">
                <columns>
-                  <TableColumn fx:id="nameColumn" prefWidth="126.0" text="C1" />
-                  <TableColumn fx:id="nameColumn1" prefWidth="126.0" text="รูป" />
+                  <TableColumn fx:id="nameColumn1" prefWidth="41.0" text="รูป" />
+                  <TableColumn fx:id="nameColumn" prefWidth="569.0" text="name" />
+                  <TableColumn fx:id="addButtonColumn" minWidth="0.0" prefWidth="33.0" />
                </columns>
             </TableView>
             <Button layoutX="14.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleAllButton" prefHeight="40.0" prefWidth="90.0" text="all" />
@@ -54,13 +60,7 @@
       <Pane layoutX="22.0" layoutY="134.0" prefHeight="566.0" prefWidth="525.0" styleClass="pane-frame" />
       <Pane layoutX="58.0" layoutY="172.0" prefHeight="338.0" prefWidth="460.0" styleClass="pane-inFrame2">
          <children>
-            <Pane layoutX="21.0" layoutY="14.0" prefHeight="40.0" prefWidth="419.0" styleClass="pane-frame">
-               <children>
-                  <Label layoutX="24.0" layoutY="12.0" text="จำนวน" />
-                  <Label layoutX="105.0" layoutY="12.0" text="เมนู" />
-                  <Label layoutX="301.0" layoutY="12.0" text="ราคา" />
-               </children>
-            </Pane>
+            <Pane layoutX="21.0" layoutY="14.0" prefHeight="40.0" prefWidth="419.0" styleClass="pane-frame" />
             <Pane layoutX="21.0" layoutY="268.0" prefHeight="40.0" prefWidth="419.0" styleClass="pane-frame">
                <children>
                   <Text layoutX="116.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -69,16 +69,19 @@
                   <Label layoutX="21.0" layoutY="12.0" text="Total" />
                </children>
             </Pane>
-            <TableView layoutX="21.0" layoutY="54.0" prefHeight="214.0" prefWidth="419.0">
+            <TableView fx:id="orderDetailTable" layoutX="21.0" layoutY="54.0" prefHeight="214.0" prefWidth="419.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="orderDetailQuantityColumn" prefWidth="75.0" text="จำนวน" />
+                <TableColumn minWidth="0.0" prefWidth="28.0" text="รูป" />
+                  <TableColumn fx:id="orderDetailMenuNameColumn" prefWidth="105.0" text="เมนู" />
+                  <TableColumn fx:id="orderDetailToppingNameColumn" prefWidth="116.0" text="ท็อปปิ้ง" />
+                  <TableColumn fx:id="orderDetailTotalPriceColumn" prefWidth="60.0" text="ราคา" />
+                  <TableColumn fx:id="orderDetailDeleteButtonColumn" prefWidth="33.0" text="x" />
               </columns>
             </TableView>
          </children>
       </Pane>
       <Button layoutX="43.0" layoutY="602.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="clear" />
-      <Button layoutX="259.0" layoutY="602.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยกเลิก" />
-      <Button layoutX="408.0" layoutY="602.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
+      <Button layoutX="408.0" layoutY="602.0" mnemonicParsing="false" onAction="#handleAcceptCreateOrderButton" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน" />
    </children>
 </AnchorPane>

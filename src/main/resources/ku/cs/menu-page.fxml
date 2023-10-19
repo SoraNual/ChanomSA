@@ -4,17 +4,24 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MenuPageController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MenuPageController">
    <children>
       <Button layoutX="43.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="115.0" prefWidth="324.0" text="เพิ่มเมนู" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
-      <TableView fx:id="menuTable" layoutX="525.0" layoutY="177.0" prefHeight="411.0" prefWidth="297.0">
+      <TableView fx:id="menuTable" layoutX="525.0" layoutY="177.0" prefHeight="411.0" prefWidth="377.0">
         <columns>
-            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="type" />
-            <TableColumn fx:id="nameColumn" prefWidth="75.0" text="name" />
-            <TableColumn fx:id="priceColumn" prefWidth="75.0" text="price" />
+            <TableColumn prefWidth="75.0" text="รูป" />
+            <TableColumn fx:id="nameColumn" prefWidth="75.0" text="ชื่อเมนู" />
+            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="ประเภท" />
+            <TableColumn fx:id="priceColumn" prefWidth="75.0" text="ราคา" />
+            <TableColumn fx:id="detailButtonColumn" prefWidth="75.0" text="detail" />
         </columns>
       </TableView>
+      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+         <children>
+            <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

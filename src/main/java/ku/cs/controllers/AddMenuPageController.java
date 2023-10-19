@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import ku.cs.models.Menu;
 import ku.cs.models.MenuType;
-import ku.cs.models.MenuTypeList;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.Connection;
@@ -20,7 +19,6 @@ import java.sql.PreparedStatement;
 import java.util.Objects;
 
 public class AddMenuPageController {
-    private DatabaseConnection databaseConnection;
 
     @FXML
     private TextField nameTextField;
@@ -37,9 +35,8 @@ public class AddMenuPageController {
     public void initialize(){
         //setup
         System.out.println("-------AddMenuPage------");
-        MenuTypeList menuTypeList = new MenuTypeList();
 
-        ObservableList<MenuType> menuTypes = FXCollections.observableArrayList(MenuType.ชา, MenuType.กาแฟ, MenuType.โซดา ,MenuType.โกโก้,MenuType.นม);
+        ObservableList<String > menuTypes = FXCollections.observableArrayList("ชา","กาแฟ","โซดา","โกโก้","นม" );
         typeComboBox.setItems(menuTypes);
         notification.setVisible(false);
     }
@@ -123,7 +120,7 @@ public class AddMenuPageController {
     @FXML
     public void handleBackButton(ActionEvent actionEvent){
         try {
-            com.github.saacsos.FXRouter.goTo("main");
+            com.github.saacsos.FXRouter.goTo("menu");
         } catch (Exception err){
             System.out.println("Can't go back");
         }

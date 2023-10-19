@@ -3,6 +3,7 @@ package ku.cs.controllers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,12 +17,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MenuPageController {
-
-    @FXML
-    private AnchorPane scenePane;
     @FXML
     private TableView<Menu> menuTable;
     @FXML
@@ -30,6 +30,8 @@ public class MenuPageController {
     private TableColumn<Menu, String> nameColumn;
     @FXML
     private TableColumn<Menu, Double> priceColumn;
+    @FXML
+    private TableColumn<Menu, String> detailButtonColumn;
 
 
     public void initialize() {
@@ -38,6 +40,31 @@ public class MenuPageController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("menu_type"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("menu_price"));
+        detailButtonColumn.setCellFactory(column -> {
+            return new TableCell<Menu, String>() {
+                final Button button = new Button("See");
+
+                {
+                    button.setOnAction(event -> {
+                        // Get the selected menu item
+                        Menu menu = getTableView().getItems().get(getIndex());
+
+                        // Now you can navigate to the menuDetailPage with the selected menu
+                        goToMenuDetailPage(menu);
+                    });
+                }
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        setGraphic(button);
+                    }
+                }
+            };
+        });
 
 
         // Retrieve menu items from the database and display in the table
@@ -67,7 +94,18 @@ public class MenuPageController {
             e.printStackTrace();
         }
     }
+    private void goToMenuDetailPage(Menu menu) {
+        try {
+            // Pass the selected menu to the menuDetailPage
+            Map<String, Object> data = new HashMap<>();
+            data.put("menu", menu);
 
+            // Navigate to the menuDetailPage with the data
+            com.github.saacsos.FXRouter.goTo("menu-detail", data);
+        } catch (Exception err) {
+            System.out.println("Can't go to menuDetailPage");
+        }
+    }
 
 
     //AddMenu button

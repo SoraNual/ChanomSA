@@ -6,7 +6,11 @@ public class Topping {
     private String topping_name;
     private double topping_price;
 
-    public Topping( String topping_name, double topping_price) {
+    public Topping() {
+    }
+
+    public Topping(int topping_id, String topping_name, double topping_price) {
+        this.topping_id = topping_id;
         this.topping_name = topping_name;
         this.topping_price = topping_price;
     }
