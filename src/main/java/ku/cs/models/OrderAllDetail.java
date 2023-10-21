@@ -1,5 +1,10 @@
 package ku.cs.models;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.File;
+
 public class OrderAllDetail {
 
     private int orderDetail_id;
@@ -84,5 +89,35 @@ public class OrderAllDetail {
 
     public void setTotal_price(double total_price) {
         this.total_price = total_price;
+    }
+
+
+    public String getPicturePath(){
+        // set default picture -- Khaokrapow
+        String picturePath =   "data/menus-pictures/" + getMenu_id() + ".png";
+        if (new File(picturePath).exists()) return picturePath;
+        //        User user = new User();
+        //        user.load(getComplainantName());
+        //        if (user.isPictureSet()) return user.getPicturePath();
+        return "data/menus-pictures/default.png";
+    }
+    public String getEditPicturePath(){
+        // set default picture -- Khaokrapow
+        String picturePath =   "data/menus-pictures/" + getMenu_id() + ".png";
+        //        User user = new User();
+        //        user.load(getComplainantName());
+        //        if (user.isPictureSet()) return user.getPicturePath();
+        return "data/menus-pictures/default.png";
+    }
+    public ImageView getImageView(){
+        ImageView imageView = new ImageView(getPicture());
+        imageView.setFitHeight(25);
+        imageView.setFitWidth(25);
+        return imageView;
+    }
+
+    public Image getPicture(){
+        File file = new File(getPicturePath());
+        return new Image(String.valueOf(file.toURI()));
     }
 }
