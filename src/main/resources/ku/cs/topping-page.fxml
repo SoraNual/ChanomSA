@@ -9,10 +9,9 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ToppingPageController">
     <children>
         <Button layoutX="62.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleAddToppingButton" prefHeight="115.0" prefWidth="324.0" text="เพิ่มท็อปปิ้ง" />
-        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
-      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+      <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
          <children>
-            <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
          </children>
       </Pane>
       <TableView fx:id="toppingTable" layoutX="525.0" layoutY="177.0" prefHeight="411.0" prefWidth="307.0">

@@ -19,10 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MenuDetailPageController {
     // detailPane
@@ -60,6 +57,7 @@ public class MenuDetailPageController {
     private String typeUse;
     private double priceUse;
     private int menuNow;
+    private String pictureStatus;
 
 
 
@@ -98,6 +96,7 @@ public class MenuDetailPageController {
         typeComboBox.setItems(menuTypes);
 
         notificationLabel.setText("");
+        pictureStatus = "OldPicture";
         updateMenu();
     }
     private void updateMenu(){
@@ -141,9 +140,21 @@ public class MenuDetailPageController {
         String updatedName = nameTextField.getText();
         double updatedPrice;
         String updatedType = (String) typeComboBox.getValue(); // Cast to String
+        if (Objects.equals(updatedName, "")){
+            notificationLabel.setVisible(true);
+            notificationLabel.setText("ชื่อเมนูไม่ถูกต้อง");
+            System.out.println("Input Error");
+            return;
+        }
 
         try {
             updatedPrice = Double.parseDouble(priceTextField.getText());
+            if (updatedPrice < 0 ){
+                notificationLabel.setVisible(true);
+                notificationLabel.setText("ราคาไม่ถูกต้อง");
+                System.out.println("Input Error");
+                return;
+            }
         } catch (NumberFormatException e) {
             notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
             return; // Exit the method if the price is not a valid number
@@ -228,11 +239,19 @@ public class MenuDetailPageController {
     private void addPictureToData(){
         Menu menu = new Menu(menuNow);
         if(pictureFile != null){
+            // new picture
             menu.setPicture(pictureFile);
             System.out.println("add menu picture to data");
         }
         else {
-            menu.setPicture(new File(menu.getEditPicturePath()));
+            // default picture and old
+            if(pictureStatus == "DefaultPicture"){
+                menu.setPicture(new File(menu.getEditPicturePath()));
+            }
+            else {
+                menu.setPicture(new File(menu.getPicturePath()));
+            }
+
         }
     }
     public void  handleAddPictureButton(ActionEvent actionEvent){
@@ -241,9 +260,16 @@ public class MenuDetailPageController {
             menuPicture = new Image(String.valueOf(pictureFile.toURI()));
             menuAllImageView.setImage(menuPicture);
             menuEditImageView.setImage(menuPicture);
+            pictureStatus = "NewPicture";
             System.out.println("--AddPicture--");
         }
         catch (Exception err){
+            if(Objects.equals(pictureStatus, "DefaultPicture")){
+                pictureStatus = "DefaultPicture";
+            }
+            else{
+                pictureStatus = "OldPicture";
+            }
             System.out.println("--Not found picture--");
         }
 
@@ -252,6 +278,7 @@ public class MenuDetailPageController {
         pictureFile = null;
         menuPicture = null;
         menuEditImageView.setImage(null);
+        pictureStatus = "DefaultPicture";
         System.out.println("--DeletePicture--");
     }
     //back button

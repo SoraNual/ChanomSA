@@ -1,23 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="anchor-pane" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.AddToppingPageController">
     <children>
-        <Pane layoutX="251.0" layoutY="131.0" prefHeight="491.0" prefWidth="812.0" styleClass="pane-mid" stylesheets="@styles/chanom.css" />
-        <TextField fx:id="nameTextField" layoutX="663.0" layoutY="239.0" promptText="ชื่อท็อปปิ้ง" />
-        <TextField fx:id="priceTextField" layoutX="663.0" layoutY="342.0" promptText="ราคา" />
-        <Button layoutX="670.0" layoutY="414.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="25.0" prefWidth="95.0" text="ยืนยัน" />
-        <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+        <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
             <children>
-                <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
             </children>
         </Pane>
-        <Text layoutX="623.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อ" />
-        <Text layoutX="625.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ราคา" />
+      <Pane fx:id="detailPane" layoutX="240.0" layoutY="90.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles/chanom.css">
+         <children>
+              <TextField fx:id="nameTextField" layoutX="544.0" layoutY="90.0" promptText="ชื่อท็อปปิ้ง">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+              <TextField fx:id="priceTextField" layoutX="544.0" layoutY="130.0" promptText="ราคา">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+              <Button layoutX="515.0" layoutY="485.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="60.0" prefWidth="200.0" text="ยืนยัน">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+            <Pane layoutX="29.0" layoutY="50.0" prefHeight="500.0" prefWidth="400.0">
+               <styleClass>
+                  <String fx:value="pane-inFrame1" />
+                  <String fx:value="curve" />
+               </styleClass>
+            </Pane>
+            <Label layoutX="450.0" layoutY="80.0" text="ชื่อ">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="450.0" layoutY="120.0" text="ราคา">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+         <styleClass>
+            <String fx:value="pane-frame" />
+            <String fx:value="curve" />
+         </styleClass>
+      </Pane>
     </children>
 </AnchorPane>

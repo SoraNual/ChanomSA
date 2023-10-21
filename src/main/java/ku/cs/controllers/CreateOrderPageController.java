@@ -13,10 +13,7 @@ import ku.cs.models.OrderAllDetail;
 import ku.cs.models.OrderDetail;
 import ku.cs.services.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -467,27 +464,46 @@ public class CreateOrderPageController {
             System.out.println(">> เพี่มออเดอร์ ที่ "+ orderNow+" <<");
             //add order detail
 
-            String insertOrderDetailSQL = "INSERT INTO orderdetails (order_id, menu_id, topping_id, quantity,total_price) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement orderDetailStatement = connection.prepareStatement(insertOrderDetailSQL);
+            // Create a new order and retrieve the generated order ID
+            String insertOrderSQL = "INSERT INTO orders (order_price, status) VALUES (?, ?)";
+            PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSQL, Statement.RETURN_GENERATED_KEYS);
+            insertOrderStatement.setDouble(1, 0.0); // Set the initial order price (e.g., 0.0)
+            insertOrderStatement.setString(2, "ยังไม่ชำระเงิน"); // Set the initial status
 
-            // Replace placeholders with actual data
-            for (OrderAllDetail orderDetail : orderAllDetails) {
-                // Replace placeholders with actual data
-                orderDetailStatement.setInt(1, orderNow); // Use the same order ID for all order details
-                orderDetailStatement.setInt(2, orderDetail.getMenu_id());
-                orderDetailStatement.setInt(3, orderDetail.getTopping_id());
-                orderDetailStatement.setInt(4, orderDetail.getQuantity());
-                orderDetailStatement.setDouble(5, orderDetail.getTotal_price());
-
-                // Execute the insert query for each order detail
-                int detailRowsInserted = orderDetailStatement.executeUpdate();
-
-                if (detailRowsInserted > 0) {
-                    System.out.println("A new order detail was inserted successfully.");
-                } else {
-                    System.out.println("Failed to insert order detail.");
+            int orderID = -1; // Initialize with an invalid value
+            int rowsInserted = insertOrderStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                ResultSet generatedKeys = insertOrderStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    orderID = generatedKeys.getInt(1); // Get the generated order ID
                 }
             }
+
+            if (orderID != -1) {
+                // You have a valid order ID, proceed to add order details
+                for (OrderAllDetail orderDetail : orderAllDetails) {
+                    String insertOrderDetailSQL = "INSERT INTO orderdetails (order_id, menu_id, topping_id, quantity, total_price) VALUES (?, ?, ?, ?, ?)";
+                    PreparedStatement orderDetailStatement = connection.prepareStatement(insertOrderDetailSQL);
+                    orderDetailStatement.setInt(1, orderID); // Use the generated order ID
+                    // Set other details and execute the query
+                    // ...
+                    // Update the order price and status for the newly created order
+                    orderDetailStatement.setInt(2, orderDetail.getMenu_id());
+                    orderDetailStatement.setInt(3, orderDetail.getTopping_id());
+                    orderDetailStatement.setInt(4, orderDetail.getQuantity());
+                    orderDetailStatement.setDouble(5, orderDetail.getTotal_price());
+
+                    // Execute the insert query for each order detail
+                    int detailRowsInserted = orderDetailStatement.executeUpdate();
+
+                    if (detailRowsInserted > 0) {
+                        System.out.println("A new order detail was inserted successfully.");
+                    } else {
+                        System.out.println("Failed to insert order detail.");
+                    }
+                }
+                }
+
 
 
             //Update order with orderDetail
@@ -505,10 +521,11 @@ public class CreateOrderPageController {
             System.out.println("Total Order Price: " + totalOrderPrice);
 
             // Update the orders table with the calculated order price
-            String updateOrderPriceSQL = "INSERT INTO orders ( order_price, status) VALUES (?, ?)";
+            String updateOrderPriceSQL = "UPDATE orders SET order_price = ?, status = ? WHERE order_id = ?";
             PreparedStatement updateOrderPriceStatement = connection.prepareStatement(updateOrderPriceSQL);
             updateOrderPriceStatement.setDouble(1, totalOrderPrice);
-            updateOrderPriceStatement.setString(2, "ยังไม่ชำระเงิน"); // Set the order_id
+            updateOrderPriceStatement.setString(2, "ยังไม่ชำระเงิน");
+            updateOrderPriceStatement.setInt(3, orderNow); // Set the order_id
 
             // Execute the update query
             int rowsUpdated = updateOrderPriceStatement.executeUpdate();
