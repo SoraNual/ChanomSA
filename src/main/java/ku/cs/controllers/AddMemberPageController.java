@@ -63,6 +63,11 @@ public class AddMemberPageController {
                             nameTextField.setText("");
                             phoneTextField.setText("");
                             errorLabel.setText("");
+                            try {
+                                com.github.saacsos.FXRouter.goTo("member",members);
+                            } catch (Exception err){
+                                System.out.println("Can't go to member");
+                            }
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
