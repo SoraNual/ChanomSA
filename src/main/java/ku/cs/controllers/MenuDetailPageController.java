@@ -6,11 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import ku.cs.models.Menu;
 import ku.cs.models.MenuType;
 import ku.cs.services.DatabaseConnection;
+import ku.cs.util.ProjectUtility;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,11 +48,18 @@ public class MenuDetailPageController {
     @FXML
     private ComboBox typeComboBox;
     @FXML
+    private ImageView menuEditImageView;
+    @FXML
     private Label notificationLabel;
+    // picture
+    @FXML private ImageView menuAllImageView;
+    private Image menuPicture;
+    private File pictureFile;
     Menu menu = new Menu();
     private String nameUse;
     private String typeUse;
     private double priceUse;
+    private int menuNow;
 
 
 
@@ -68,10 +79,15 @@ public class MenuDetailPageController {
             System.out.println("Menu Type: " + menu.getMenu_type());
             System.out.println("Menu Name: " + menu.getMenu_name());
             System.out.println("Menu Price: " + menu.getMenu_price());
+
         }
         nameUse = menu.getMenu_name();
         typeUse = menu.getMenu_type();
         priceUse = menu.getMenu_price();
+        menuNow = menu.getMenu_id();
+
+        menuPicture = menu.getPicture();
+        menuAllImageView.setImage(menuPicture);
 
 
 
@@ -89,21 +105,27 @@ public class MenuDetailPageController {
         menuTypeLabel.setText(typeUse);
         menuPriceLabel.setText(String.valueOf(priceUse));
 
+        menuPicture = menu.getPicture();
+        menuAllImageView.setImage(menuPicture);
+        menuEditImageView.setImage(menuPicture);
+
 
     }
 
     //Edit button
     @FXML
     public void handleEditButton(ActionEvent actionEvent){
-            detailPane.setVisible(false);
-            editDetailPane.setVisible(true);
+        detailPane.setVisible(false);
+        editDetailPane.setVisible(true);
 
-            nameTextField.setText(nameUse);
-            //typeComboBox
-            typeComboBox.setValue(typeUse);
-            priceTextField.setText(String.valueOf(priceUse));
+        nameTextField.setText(nameUse);
+        //typeComboBox
+        typeComboBox.setValue(typeUse);
+        priceTextField.setText(String.valueOf(priceUse));
+        notificationLabel.setText("");
 
-            notificationLabel.setText("");
+        menuPicture = menu.getPicture();
+        menuEditImageView.setImage(menuPicture);
     }
     //Cancel button
     @FXML
@@ -189,6 +211,10 @@ public class MenuDetailPageController {
             typeUse = type;
             priceUse = price;
             updateMenu();
+            addPictureToData();
+            menuPicture = menu.getPicture();
+            menuAllImageView.setImage(menuPicture);
+
 
             statement.close();
             connection.close();
@@ -198,6 +224,35 @@ public class MenuDetailPageController {
             e.printStackTrace();
             return false;
         }
+    }
+    private void addPictureToData(){
+        Menu menu = new Menu(menuNow);
+        if(pictureFile != null){
+            menu.setPicture(pictureFile);
+            System.out.println("add menu picture to data");
+        }
+        else {
+            menu.setPicture(new File(menu.getEditPicturePath()));
+        }
+    }
+    public void  handleAddPictureButton(ActionEvent actionEvent){
+        try {
+            pictureFile = ProjectUtility.pictureChooser();
+            menuPicture = new Image(String.valueOf(pictureFile.toURI()));
+            menuAllImageView.setImage(menuPicture);
+            menuEditImageView.setImage(menuPicture);
+            System.out.println("--AddPicture--");
+        }
+        catch (Exception err){
+            System.out.println("--Not found picture--");
+        }
+
+    }
+    public void handleDeletePictureButton(ActionEvent actionEvent){
+        pictureFile = null;
+        menuPicture = null;
+        menuEditImageView.setImage(null);
+        System.out.println("--DeletePicture--");
     }
     //back button
     @FXML

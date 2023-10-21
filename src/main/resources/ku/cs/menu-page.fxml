@@ -11,7 +11,7 @@
       <Button layoutX="43.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="115.0" prefWidth="324.0" text="เพิ่มเมนู" />
       <TableView fx:id="menuTable" layoutX="525.0" layoutY="177.0" prefHeight="411.0" prefWidth="377.0">
         <columns>
-            <TableColumn prefWidth="75.0" text="รูป" />
+            <TableColumn fx:id="pictureColumn" prefWidth="75.0" text="รูป" />
             <TableColumn fx:id="nameColumn" prefWidth="75.0" text="ชื่อเมนู" />
             <TableColumn fx:id="typeColumn" prefWidth="75.0" text="ประเภท" />
             <TableColumn fx:id="priceColumn" prefWidth="75.0" text="ราคา" />

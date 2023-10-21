@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import ku.cs.models.Menu;
 import ku.cs.models.OrderAllDetail;
@@ -30,6 +31,8 @@ public class CreateOrderPageController {
     private TableColumn<Menu, String> nameColumn;
     @FXML
     private TableColumn<Menu, String> addButtonColumn;
+    @FXML
+    private TableColumn<Menu, ImageView> menuPictureColumn;
     // addMenuPane
     @FXML
     private Pane addMenuPane;
@@ -63,15 +66,27 @@ public class CreateOrderPageController {
      @FXML
      private TableView<OrderAllDetail> orderDetailTable;
      @FXML
-     private TableColumn<OrderDetail, String> orderDetailMenuNameColumn;
+     private TableColumn<OrderAllDetail, String> orderDetailMenuNameColumn;
     @FXML
-    private TableColumn<OrderDetail, String> orderDetailToppingNameColumn;
+    private TableColumn<OrderAllDetail, String> orderDetailToppingNameColumn;
     @FXML
-    private TableColumn<OrderDetail, String> orderDetailQuantityColumn;
+    private TableColumn<OrderAllDetail, String> orderDetailQuantityColumn;
     @FXML
-    private TableColumn<OrderDetail, String> orderDetailTotalPriceColumn;
+    private TableColumn<OrderAllDetail, String> orderDetailTotalPriceColumn;
      @FXML
-     private TableColumn<OrderDetail, String> orderDetailDeleteButtonColumn;
+     private TableColumn<OrderAllDetail, String> orderDetailDeleteButtonColumn;
+    @FXML
+    private TableColumn<OrderAllDetail, ImageView> menuPictureColumn2;
+     private double orderTotalPrice;
+    @FXML
+    private Label orderTotalPriceLabel;
+    private int orderTotalQuantity;
+    @FXML
+    private Label orderTotalQuantityLabel;
+
+
+     @FXML
+     private Label createOrderNotificationLabel;
 
 
     private String typeToShow ;
@@ -97,6 +112,46 @@ public class CreateOrderPageController {
         }
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
+        menuPictureColumn.setCellFactory(column -> new TableCell<Menu, ImageView>() {
+            final ImageView imageView = new ImageView();
+            {
+                imageView.setFitWidth(50); // Adjust the desired width
+                imageView.setFitHeight(50); // Adjust the desired height
+            }
+
+            @Override
+            protected void updateItem(ImageView image, boolean empty) {
+                super.updateItem(image, empty);
+                if (empty || image == null) {
+                    setGraphic(null);
+                } else {
+                    imageView.setImage(image.getImage());
+                    setGraphic(imageView);
+                }
+            }
+        });
+        menuPictureColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+        menuPictureColumn2.setCellFactory(column -> new TableCell<OrderAllDetail, ImageView>() {
+            final ImageView imageView = new ImageView();
+            {
+                imageView.setFitWidth(50); // Adjust the desired width
+                imageView.setFitHeight(50); // Adjust the desired height
+            }
+
+            @Override
+            protected void updateItem(ImageView image, boolean empty) {
+                super.updateItem(image, empty);
+                if (empty || image == null) {
+                    setGraphic(null);
+                } else {
+                    imageView.setImage(image.getImage());
+                    setGraphic(imageView);
+                }
+            }
+        });
+        menuPictureColumn2.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
         addButtonColumn.setCellFactory(column -> {
             return new TableCell<Menu, String>() {
                 final Button button = new Button("+");
@@ -132,6 +187,8 @@ public class CreateOrderPageController {
         setupTopping();
         addMenuPane.setVisible(false);
         quantityLabel.setText("1");
+        createOrderNotificationLabel.setText("");
+        updateOrderTotalPriceAndQuantityLabel();
 
 
     }
@@ -148,6 +205,7 @@ public class CreateOrderPageController {
         updatePriceWithTopping();
         toppingComboBox.getSelectionModel().select(0);
         quantityLabel.setText("1");
+        createOrderNotificationLabel.setText("");
 
     }
 
@@ -187,6 +245,8 @@ public class CreateOrderPageController {
             resultSet.close();
             statement.close();
             connection.close();
+
+            createOrderNotificationLabel.setText("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -280,6 +340,8 @@ public class CreateOrderPageController {
         }
         totalPriceToAddInOrderDetail = (menuPriceToAddInOrderDetail+toppingPrice)*quantityToAddInOrderDetail;
         totalLabel.setText("รวม :"+totalPriceToAddInOrderDetail+" บาท");
+
+
     }
     @FXML
     public void updatePriceWithToppingAction(ActionEvent actionEvent){
@@ -293,8 +355,7 @@ public class CreateOrderPageController {
     }
     @FXML
     public void handleAcceptMenuButton(ActionEvent actionEvent) {
-        addMenuPane.setVisible(false);
-        chooseMenuPane.setVisible(true);
+
         updatePriceWithTopping();
 
         // Check if the menu and topping already exist in orderAllDetails
@@ -307,6 +368,14 @@ public class CreateOrderPageController {
                 if (newQuantity <= 10) {
                     detail.setQuantity(newQuantity);
                 } else {
+                    if (detail.getTopping_id() == 0){
+                        createOrderNotificationLabel.setText("จำนวนที่เพิ่มทำให้ "+detail.getMenu_name()+" มีจำนวนเกิน 10 แก้ว");
+                    }
+                    else{
+                        createOrderNotificationLabel.setText("จำนวนที่เพิ่มทำให้ "+detail.getMenu_name()+"+"+detail.getTopping_name()+" มีจำนวน 10 แก้ว");
+                    }
+
+                    return;
                     // Handle exceeding quantity (e.g., show an error message)
                 }
                 break;
@@ -322,6 +391,8 @@ public class CreateOrderPageController {
                 " ท็อปปิ้งที่ " + toppingIDToAddInOrderDetail + " ชื่อ " + toppingNameToAddInOrderDetail +
                 " จำนวน " + quantityToAddInOrderDetail + " แก้ว ราคา : " + totalPriceToAddInOrderDetail);
 
+        addMenuPane.setVisible(false);
+        chooseMenuPane.setVisible(true);
         updateOrderTable();
     }
     private void updateOrderTable(){
@@ -332,14 +403,26 @@ public class CreateOrderPageController {
         orderDetailQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         orderDetailTotalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("total_price"));
         orderDetailDeleteButtonColumn.setCellFactory(column -> {
-            return new TableCell<OrderDetail, String>() {
+            return new TableCell<OrderAllDetail, String>() {
                 final Button button = new Button("x");
 
                 {
                     button.setOnAction(event -> {
+                        // Get the selected orderDetail item
+                        OrderAllDetail tempOrderAllDetails = getTableView().getItems().get(getIndex());
+                        for (int i = 0; i < orderAllDetails.size(); i++) {
+                            OrderAllDetail orderDetail = orderAllDetails.get(i);
+                            if (orderDetail.getMenu_name() == tempOrderAllDetails.getMenu_name() &&
+                                    orderDetail.getTopping_name() == tempOrderAllDetails.getTopping_name()) {
+                                orderAllDetails.remove(i);
 
-                        // Now you can send the menu_name to another action
-                        handleDeleteButtonAction();
+                                // Update the table view
+                                orderDetailTable.setItems(FXCollections.observableList(orderAllDetails));
+                                updateOrderTotalPriceAndQuantityLabel();
+
+                                break; // Exit the loop after removing the item
+                            }
+                        }
                     });
                 }
 
@@ -356,22 +439,28 @@ public class CreateOrderPageController {
         });
 
         orderDetailTable.setItems(FXCollections.observableList(orderAllDetails));
+        updateOrderTotalPriceAndQuantityLabel();
+
 
     }
-    private void handleDeleteButtonAction(){
-        // Get the selected row from the table view
-        OrderAllDetail selectedOrderAllDetail = orderDetailTable.getSelectionModel().getSelectedItem();
-
-        if (selectedOrderAllDetail != null) {
-            // Remove the selected order detail from the list
-            orderAllDetails.remove(selectedOrderAllDetail);
-
-            // Update the table view
-            orderDetailTable.setItems(FXCollections.observableList(orderAllDetails));
+    private void updateOrderTotalPriceAndQuantityLabel(){
+        orderTotalPrice = 0;
+        orderTotalQuantity = 0;
+        for (OrderAllDetail detail : orderAllDetails) {
+            orderTotalPrice += detail.getTotal_price();
+            orderTotalQuantity += detail.getQuantity();
         }
+        orderTotalPriceLabel.setText(String.valueOf(orderTotalPrice+" บาท"));
+        orderTotalQuantityLabel.setText(String.valueOf(orderTotalQuantity+" แก้ว"));
+
     }
     @FXML
     public void handleAcceptCreateOrderButton(ActionEvent actionEvent){
+        if (orderAllDetails.isEmpty()) {
+            createOrderNotificationLabel.setText("ไม่มีรายการเครื่องดื่มในออร์เดอร์");
+            return;
+        }
+
         try  {
             Connection connection = DatabaseConnection.getConnection();
 
@@ -433,17 +522,19 @@ public class CreateOrderPageController {
             // Close the prepared statements
             calculateOrderPriceStatement.close();
             updateOrderPriceStatement.close();
-
+            orderAllDetails = new ArrayList<>();
+            updateOrderTable();
 
         }
          catch (SQLException e) {
         e.printStackTrace();
         }
-
-
-
-
-
+    }
+    @FXML
+    public void handleClearButton(ActionEvent actionEvent){
+        orderAllDetails = new ArrayList<>();
+        createOrderNotificationLabel.setText("");
+        updateOrderTable();
     }
     // change type
     @FXML

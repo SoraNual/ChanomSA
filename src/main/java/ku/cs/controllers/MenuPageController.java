@@ -8,6 +8,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ku.cs.models.Menu;
 import ku.cs.services.DatabaseConnection;
@@ -32,6 +34,8 @@ public class MenuPageController {
     private TableColumn<Menu, Double> priceColumn;
     @FXML
     private TableColumn<Menu, String> detailButtonColumn;
+    @FXML
+    private TableColumn<Menu, ImageView> pictureColumn;
 
 
     public void initialize() {
@@ -40,6 +44,27 @@ public class MenuPageController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("menu_type"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("menu_price"));
+        pictureColumn.setCellFactory(column -> new TableCell<Menu, ImageView>() {
+            final ImageView imageView = new ImageView();
+            {
+                imageView.setFitWidth(50); // Adjust the desired width
+                imageView.setFitHeight(50); // Adjust the desired height
+            }
+
+            @Override
+            protected void updateItem(ImageView image, boolean empty) {
+                super.updateItem(image, empty);
+                if (empty || image == null) {
+                    setGraphic(null);
+                } else {
+                    imageView.setImage(image.getImage());
+                    setGraphic(imageView);
+                }
+            }
+        });
+        pictureColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+
         detailButtonColumn.setCellFactory(column -> {
             return new TableCell<Menu, String>() {
                 final Button button = new Button("See");
@@ -82,7 +107,7 @@ public class MenuPageController {
                 String menuName = resultSet.getString("menu_name");
                 double menuPrice = resultSet.getDouble("menu_price");
                 menu.add(new Menu(menuId,menuType, menuName, menuPrice));
-                System.out.println(menuType+" "+menuName+" "+menuPrice);
+                System.out.println(menuId+" "+menuType+" "+menuName+" "+menuPrice);
             }
 
             menuTable.setItems(FXCollections.observableList(menu));

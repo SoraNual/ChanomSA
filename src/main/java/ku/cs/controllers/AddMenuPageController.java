@@ -1,6 +1,7 @@
 package ku.cs.controllers;
 
 import java.awt.geom.QuadCurve2D;
+import java.io.File;
 import java.sql.*;
 
 import javafx.collections.FXCollections;
@@ -10,12 +11,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import ku.cs.models.Menu;
 import ku.cs.models.MenuType;
 import ku.cs.services.DatabaseConnection;
+import ku.cs.util.ProjectUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class AddMenuPageController {
@@ -30,6 +38,11 @@ public class AddMenuPageController {
     private ComboBox typeComboBox;
     @FXML
     private Label notification;
+    private int menuNow;
+    // picture
+    @FXML private ImageView menuImageView;
+    private Image menuPicture;
+    private File pictureFile;
 
     @FXML
     public void initialize(){
@@ -83,10 +96,14 @@ public class AddMenuPageController {
 
             }
 
+            String countQuery = "SELECT COUNT(*) AS menu_count FROM menus";
+            PreparedStatement countStatement = connection.prepareStatement(countQuery);
+            ResultSet countResultSet = countStatement.executeQuery();
 
-            resultSet.close();
-            statement.close();
-            connection.close();
+            if (countResultSet.next()) {
+                menuNow = countResultSet.getInt("menu_count");
+                menuNow++; // เพิ่มค่า menuNow อีก 1
+            }
 
 
             // เขียนคำสั่ง SQL สำหรับ INSERT ข้อมูล
@@ -102,14 +119,47 @@ public class AddMenuPageController {
                 nameTextField.setText("");
                 priceTextField.setText("");
                 typeComboBox.cancelEdit();
-                gotoMenuPage();
+
+                addPictureToData();
+
+                handleBackToMenuButton();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
-    private void gotoMenuPage(){
+    private void addPictureToData(){
+        Menu menu = new Menu(menuNow);
+        if(pictureFile != null){
+            menu.setPicture(pictureFile);
+            System.out.println("add menu picture to data");
+        }
+        else {
+            menu.setPicture(new File(menu.getPicturePath()));
+        }
+    }
+    public void  handleAddPictureButton(ActionEvent actionEvent){
+        try {
+            pictureFile = ProjectUtility.pictureChooser();
+            menuPicture = new Image(String.valueOf(pictureFile.toURI()));
+            menuImageView.setImage(menuPicture);
+            System.out.println("--AddPicture--");
+        }
+        catch (Exception err){
+            System.out.println("--Not found picture--");
+        }
+
+    }
+    public void handleDeletePictureButton(ActionEvent actionEvent){
+        pictureFile = null;
+        menuPicture = null;
+        menuImageView.setImage(null);
+        System.out.println("--DeletePicture--");
+    }
+    //back to menu button
+
+    private void handleBackToMenuButton(){
         try {
             com.github.saacsos.FXRouter.goTo("menu");
         } catch (Exception err){
