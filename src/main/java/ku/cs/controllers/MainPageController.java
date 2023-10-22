@@ -52,6 +52,31 @@ public class MainPageController {
             System.out.println("Can't go to memberPage");
         }
     }
+    @FXML
+    public void handleOrderPageButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("order-management");
+        } catch (Exception err){
+            System.out.println("Can't go to orderPage");
+            err.printStackTrace();
+        }
+    }
+    @FXML
+    public void handleReceiptPageButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("receipt");
+        } catch (Exception err){
+            System.out.println("Can't go to receiptPage");
+        }
+    }
+    @FXML
+    public void handleSalesPageButton(ActionEvent actionEvent){
+        try {
+            com.github.saacsos.FXRouter.goTo("sales-main");
+        } catch (Exception err){
+            System.out.println("Can't go to salesRecordsMainPage");
+        }
+    }
 
 
 

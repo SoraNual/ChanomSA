@@ -29,9 +29,15 @@ public class ProjectApplication extends Application {
         FXRouter.when("add-topping", packageStr+"add-topping-page.fxml");
 
         FXRouter.when("create-order", packageStr+"create-order-page.fxml");
+        FXRouter.when("check-member", packageStr+"check-member-page.fxml");
+        FXRouter.when("order-management", packageStr+"order-management-page.fxml");
 
         FXRouter.when("member", packageStr+"member-page.fxml");
         FXRouter.when("add-member", packageStr+"add-member-page.fxml");
+
+        FXRouter.when("receipt", packageStr+"receipt-page.fxml");
+
+        FXRouter.when("sales-main", packageStr+"sales-record-main-page.fxml");
     }
 
     public static void main(String[] args) {
