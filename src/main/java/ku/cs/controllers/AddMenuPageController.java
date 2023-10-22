@@ -1,6 +1,5 @@
 package ku.cs.controllers;
 
-import java.awt.geom.QuadCurve2D;
 import java.io.File;
 import java.sql.*;
 
@@ -13,17 +12,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import ku.cs.models.Menu;
-import ku.cs.models.MenuType;
 import ku.cs.services.DatabaseConnection;
 import ku.cs.util.ProjectUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class AddMenuPageController {
@@ -37,7 +31,7 @@ public class AddMenuPageController {
     @FXML
     private ComboBox typeComboBox;
     @FXML
-    private Label notification;
+    private Label notificationLabel;
     private int menuNow;
     // picture
     @FXML private ImageView menuImageView;
@@ -51,7 +45,7 @@ public class AddMenuPageController {
 
         ObservableList<String > menuTypes = FXCollections.observableArrayList("ชา","กาแฟ","โซดา","โกโก้","นม" );
         typeComboBox.setItems(menuTypes);
-        notification.setVisible(false);
+        notificationLabel.setVisible(false);
     }
 
     @FXML
@@ -62,17 +56,23 @@ public class AddMenuPageController {
         String type = typeComboBox.getValue().toString();
         // check input
         if (Objects.equals(name, "")){
-            notification.setVisible(true);
-            notification.setText("ชื่อเมนูไม่ถูกต้อง");
+            notificationLabel.setVisible(true);
+            notificationLabel.setText("ชื่อเมนูไม่ถูกต้อง");
             System.out.println("Input Error");
             return;
         }
         try {
             double priceValue = Double.parseDouble(priceTextField.getText());
             System.out.println("Price as a double: " + priceValue);
+            if (price < 0 ){
+                notificationLabel.setVisible(true);
+                notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
+                System.out.println("Input Error");
+                return;
+            }
         } catch (NumberFormatException e) {
-            notification.setVisible(true);
-            notification.setText("ราคาไม่ถูกต้อง");
+            notificationLabel.setVisible(true);
+            notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
             System.err.println("Invalid price format: " + priceTextField.getText());
             return;
         }
@@ -88,8 +88,8 @@ public class AddMenuPageController {
                 String menuType = resultSet.getString("menu_type");
                 String menuName = resultSet.getString("menu_name");
                 if (Objects.equals(name, menuName)){
-                    notification.setVisible(true);
-                    notification.setText("ชื่อเมนู \""+name+"\" มีอยู่ในระบบแล้ว");
+                    notificationLabel.setVisible(true);
+                    notificationLabel.setText("ชื่อเมนู \""+name+"\" มีอยู่ในระบบแล้ว");
                     System.out.println("Repeat Name");
                     return;
                 }
@@ -157,6 +157,8 @@ public class AddMenuPageController {
         menuImageView.setImage(null);
         System.out.println("--DeletePicture--");
     }
+
+
     //back to menu button
 
     private void handleBackToMenuButton(){

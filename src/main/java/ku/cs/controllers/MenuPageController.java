@@ -37,6 +37,8 @@ public class MenuPageController {
     @FXML
     private TableColumn<Menu, ImageView> pictureColumn;
 
+    private String typeToShow ;
+
 
     public void initialize() {
         System.out.println("-------MenuPage------");
@@ -90,24 +92,39 @@ public class MenuPageController {
                 }
             };
         });
+        typeToShow = "All";
+        updateDatabase();
 
-
+    }
+    private void updateDatabase(){
         // Retrieve menu items from the database and display in the table
         List<Menu> menu = new ArrayList<>();
 
+        String query;
+        if ("All".equals(typeToShow)) {
+            query = "SELECT menu_id, menu_type, menu_name, menu_price FROM menus";
+        } else {
+            query = "SELECT menu_id, menu_type, menu_name, menu_price FROM menus WHERE menu_type = ?";
+        }
+
         try {
             Connection connection = DatabaseConnection.getConnection();
-            String query = "SELECT menu_id, menu_type, menu_name, menu_price FROM menus";
             PreparedStatement statement = connection.prepareStatement(query);
+
+            if (!"All".equals(typeToShow)) {
+                statement.setString(1, typeToShow);
+            }
+
             ResultSet resultSet = statement.executeQuery();
 
+            System.out.println("--Update database to "+typeToShow+" --");
             while (resultSet.next()) {
                 int menuId = resultSet.getInt("menu_id");
-                String menuType = resultSet.getString("menu_type");
                 String menuName = resultSet.getString("menu_name");
                 double menuPrice = resultSet.getDouble("menu_price");
-                menu.add(new Menu(menuId,menuType, menuName, menuPrice));
-                System.out.println(menuId+" "+menuType+" "+menuName+" "+menuPrice);
+                menu.add(new Menu(menuId,typeToShow, menuName, menuPrice));
+
+                System.out.println(typeToShow+" "+menuName+" "+menuPrice);
             }
 
             menuTable.setItems(FXCollections.observableList(menu));
@@ -115,10 +132,12 @@ public class MenuPageController {
             resultSet.close();
             statement.close();
             connection.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     private void goToMenuDetailPage(Menu menu) {
         try {
             // Pass the selected menu to the menuDetailPage
@@ -142,6 +161,38 @@ public class MenuPageController {
             System.out.println("Can't go to add-menu");
         }
     }
+
+    @FXML
+    public void handleAllButton(ActionEvent actionEvent){
+        typeToShow = "All";
+        updateDatabase();
+    }
+    @FXML
+    public void handleTeaButton(ActionEvent actionEvent){
+        typeToShow = "ชา";
+        updateDatabase();
+    }
+    @FXML
+    public void handleCoffeeButton(ActionEvent actionEvent){
+        typeToShow = "กาแฟ";
+        updateDatabase();
+    }
+    @FXML
+    public void handleSodaButton(ActionEvent actionEvent){
+        typeToShow = "โซดา";
+        updateDatabase();
+    }
+    @FXML
+    public void handleCocaoButton(ActionEvent actionEvent){
+        typeToShow = "โกโก้";
+        updateDatabase();
+    }
+    @FXML
+    public void handleMilkButton(ActionEvent actionEvent){
+        typeToShow = "นม";
+        updateDatabase();
+    }
+
     //back button
     @FXML
     public void handleBackButton(ActionEvent actionEvent){

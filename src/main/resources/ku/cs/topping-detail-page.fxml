@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -8,12 +9,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ToppingDetailPageController">
    <children>
-      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+      <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
          <children>
-            <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
          </children>
       </Pane>
       <Pane fx:id="editDetailPane" layoutX="240.0" layoutY="92.0" prefHeight="600.0" prefWidth="800.0" styleClass="pane-frame" stylesheets="@styles/chanom.css" visible="false">
@@ -48,31 +48,45 @@
             </TextField>
          </children>
       </Pane>
-      <Pane fx:id="detailPane" layoutX="250.0" layoutY="102.0" prefHeight="600.0" prefWidth="800.0" styleClass="pane-frame" stylesheets="@styles/chanom.css">
+      <Pane fx:id="detailPane" layoutX="240.0" layoutY="90.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles/chanom.css">
          <children>
-            <Pane layoutX="29.0" layoutY="50.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane-inFrame1" />
-            <Text layoutX="459.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อ">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Text layoutX="454.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ราคา">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Button layoutX="510.0" layoutY="37.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="25.0" prefWidth="95.0" text="แก้ไข" />
-            <Label fx:id="toppingNameLabel" layoutX="545.0" layoutY="96.0" text="toppingNameLabel">
+            <Pane layoutX="29.0" layoutY="50.0" prefHeight="500.0" prefWidth="400.0">
+               <styleClass>
+                  <String fx:value="pane-inFrame1" />
+                  <String fx:value="curve" />
+               </styleClass>
+               <children>
+                  <Button layoutX="100.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="50.0" prefWidth="200.0" text="แก้ไข">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
+            <Label fx:id="toppingNameLabel" layoutX="545.0" layoutY="80.0" text="toppingNameLabel">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="toppingPriceLabel" layoutX="545.0" layoutY="188.0" text="toppingPriceLabel">
+            <Label fx:id="toppingPriceLabel" layoutX="545.0" layoutY="120.0" text="toppingPriceLabel">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="450.0" layoutY="80.0" text="ชื่อ">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="450.0" layoutY="120.0" text="ราคา">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
          </children>
+         <styleClass>
+            <String fx:value="pane-frame" />
+            <String fx:value="curve" />
+         </styleClass>
       </Pane>
    </children>
 </AnchorPane>
