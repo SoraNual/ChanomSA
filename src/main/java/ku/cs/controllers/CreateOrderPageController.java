@@ -555,10 +555,11 @@ public class CreateOrderPageController {
             //add order detail
 
             // Create a new order and retrieve the generated order ID
-            String insertOrderSQL = "INSERT INTO orders (order_price, status) VALUES (?, ?)";
+            String insertOrderSQL = "INSERT INTO orders (order_price, status, order_total_quantity) VALUES (?, ?, ?)";
             PreparedStatement insertOrderStatement = connection.prepareStatement(insertOrderSQL, Statement.RETURN_GENERATED_KEYS);
             insertOrderStatement.setDouble(1, 0.0); // Set the initial order price (e.g., 0.0)
             insertOrderStatement.setString(2, "ยังไม่ชำระเงิน"); // Set the initial status
+            insertOrderStatement.setInt(3, 0);
 
             int orderID = -1; // Initialize with an invalid value
             int rowsInserted = insertOrderStatement.executeUpdate();
@@ -609,13 +610,15 @@ public class CreateOrderPageController {
                 totalOrderPrice = totalPriceResult.getDouble("total_order_price");
             }
             System.out.println("Total Order Price: " + totalOrderPrice);
+            System.out.println("With total quantity: " + orderTotalQuantity);
 
             // Update the orders table with the calculated order price
-            String updateOrderPriceSQL = "UPDATE orders SET order_price = ?, status = ? WHERE order_id = ?";
+            String updateOrderPriceSQL = "UPDATE orders SET order_price = ?, status = ?, order_total_quantity = ? WHERE order_id = ?";
             PreparedStatement updateOrderPriceStatement = connection.prepareStatement(updateOrderPriceSQL);
             updateOrderPriceStatement.setDouble(1, totalOrderPrice);
             updateOrderPriceStatement.setString(2, "ยังไม่ชำระเงิน");
-            updateOrderPriceStatement.setInt(3, orderNow); // Set the order_id
+            updateOrderPriceStatement.setInt(3, orderTotalQuantity);
+            updateOrderPriceStatement.setInt(4, orderNow); // Set the order_id
 
             // Execute the update query
             int rowsUpdated = updateOrderPriceStatement.executeUpdate();
@@ -626,13 +629,16 @@ public class CreateOrderPageController {
                 System.out.println("Failed to update order price.");
             }
 
+            // Create order to pass to the next page
+            System.out.println("Total quantity check: " + orderTotalQuantity);
+            Order order = new Order(orderNow,orderTotalQuantity,totalOrderPrice,"ยังไม่ชำระเงิน","");
+
             // Close the prepared statements
             calculateOrderPriceStatement.close();
             updateOrderPriceStatement.close();
             orderAllDetails = new ArrayList<>();
             updateOrderTable();
             // go to member check
-            Order order = new Order(orderNow,totalOrderPrice,"ยังไม่ชำระเงิน","");
             goToCheckMember(order);
 
 
@@ -682,9 +688,9 @@ public class CreateOrderPageController {
     private void goToCheckMember(Order order){
         try {
             // Pass the selected menu to the menuDetailPage
-            Map<String, Object> data = new HashMap<>();
-            data.put("order", order);
-            com.github.saacsos.FXRouter.goTo("check-member");
+            /*Map<String, Object> data = new HashMap<>();
+            data.put("order", order);*/
+            com.github.saacsos.FXRouter.goTo("check-member", order);
         } catch (Exception err){
             System.out.println("Can't go to check-member");
         }

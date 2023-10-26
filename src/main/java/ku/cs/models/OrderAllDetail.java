@@ -27,6 +27,13 @@ public class OrderAllDetail {
         this.total_price = total_price;
     }
 
+    public OrderAllDetail(String menu_name, String topping_name, int quantity, double total_price) {
+        this.menu_name = menu_name;
+        this.topping_name = topping_name;
+        this.quantity = quantity;
+        this.total_price = total_price;
+    }
+
     public int getOrderDetail_id() {
         return orderDetail_id;
     }

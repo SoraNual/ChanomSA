@@ -16,7 +16,7 @@
             <Pane layoutX="194.0" layoutY="165.0" prefHeight="518.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
-                  <String fx:value="curve" />
+                  <String fx:value="rounded" />
                </styleClass>
                <children>
                   <TextField fx:id="nameTextField" layoutX="279.0" layoutY="173.0" prefHeight="44.0" prefWidth="595.0" promptText="ชื่อ-นามสกุล" />

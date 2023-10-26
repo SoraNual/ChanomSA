@@ -15,11 +15,27 @@
     -fx-background-color: #b4b7b6;
     -fx-font-weight: bold;
 }
+
+.button-confirm{
+    -fx-background-color: #C2FFC5;
+    -fx-background-radius: 10px;
+}
+
+.button-confirm:hover{
+    -fx-background-color: #98da9b;
+}
+
+.button-confirm:pressed{
+    -fx-background-color: #5edd63;
+}
+
+
+
 .anchor-pane{
     -fx-background-color: #8886ff;
 }
 
-.curve{
+.rounded{
     -fx-background-radius: 10px;
 }
 

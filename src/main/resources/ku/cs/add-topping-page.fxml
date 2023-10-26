@@ -50,7 +50,7 @@
          </children>
          <styleClass>
             <String fx:value="pane-frame" />
-            <String fx:value="curve" />
+            <String fx:value="rounded" />
          </styleClass>
       </Pane>
     </children>

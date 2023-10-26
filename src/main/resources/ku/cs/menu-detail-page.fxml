@@ -30,7 +30,7 @@
                </children>
                <styleClass>
                   <String fx:value="pane-inFrame1" />
-                  <String fx:value="curve" />
+                  <String fx:value="rounded" />
                </styleClass></Pane>
             <Label fx:id="menuNameLabel" layoutX="545.0" layoutY="80.0" text="menuNameLabel">
                <font>
@@ -65,7 +65,7 @@
          </children>
          <styleClass>
             <String fx:value="pane-frame" />
-            <String fx:value="curve" />
+            <String fx:value="rounded" />
          </styleClass>
       </Pane>
       <Pane fx:id="editDetailPane" layoutX="240.0" layoutY="90.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles/chanom.css">
@@ -94,7 +94,7 @@
                </children>
                <styleClass>
                   <String fx:value="pane-inFrame1" />
-                  <String fx:value="curve" />
+                  <String fx:value="rounded" />
                </styleClass></Pane>
             <Button layoutX="459.0" layoutY="498.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="40.0" prefWidth="150.0" text="ยกเลิก">
                <font>
@@ -133,7 +133,7 @@
          </children>
          <styleClass>
             <String fx:value="pane-frame" />
-            <String fx:value="curve" />
+            <String fx:value="rounded" />
          </styleClass>
       </Pane>
       <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">

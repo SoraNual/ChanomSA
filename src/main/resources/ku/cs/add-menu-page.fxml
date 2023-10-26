@@ -37,7 +37,7 @@
                </children>
                <styleClass>
                   <String fx:value="pane-inFrame1" />
-                  <String fx:value="curve" />
+                  <String fx:value="rounded" />
                </styleClass></Pane>
             <Label layoutX="450.0" layoutY="80.0" text="ชื่อ">
                <font>
@@ -73,7 +73,7 @@
          </children>
          <styleClass>
             <String fx:value="pane-frame" />
-            <String fx:value="curve" />
+            <String fx:value="rounded" />
          </styleClass></Pane>
       <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
          <children>

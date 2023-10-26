@@ -16,7 +16,7 @@
             <Pane layoutX="194.0" layoutY="165.0" prefHeight="518.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
-                  <String fx:value="curve" />
+                  <String fx:value="rounded" />
                </styleClass>
                <children>
                   <Label layoutX="41.0" layoutY="23.0" text="รายชื่อสมาชิกทั้งหมด">
@@ -26,11 +26,11 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="memberTable" layoutX="224.0" layoutY="231.0" prefHeight="420.0" prefWidth="991.0" styleClass="curve" stylesheets="@styles/chanom.css">
+            <TableView fx:id="memberTable" layoutX="224.0" layoutY="231.0" prefHeight="420.0" prefWidth="991.0" styleClass="rounded" stylesheets="@styles/chanom.css">
               <columns>
-                <TableColumn fx:id="IDColumn" prefWidth="116.0" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="490.0" text="ชื่อ-นามสกุล" />
-                  <TableColumn fx:id="phoneColumn" prefWidth="387.0" text="เบอร์โทรศัพท์" />
+                <TableColumn fx:id="IDColumn" editable="false" prefWidth="116.0" resizable="false" text="ID" />
+                <TableColumn fx:id="nameColumn" editable="false" prefWidth="490.0" resizable="false" text="ชื่อ-นามสกุล" />
+                  <TableColumn fx:id="phoneColumn" editable="false" prefWidth="387.0" resizable="false" text="เบอร์โทรศัพท์" />
               </columns>
             </TableView>
             <Button layoutX="26.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="146.0" text="เพิ่มสมาชิก" />
