@@ -15,7 +15,7 @@
    <children>
       <Pane layoutX="240.0" layoutY="90.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles/chanom.css">
          <children>
-            <Label fx:id="notificationLabel" layoutX="450.0" layoutY="220.0" text="Notification" textFill="#ff2828">
+            <Label fx:id="notificationLabel" layoutX="450.0" layoutY="220.0" text="NotificationLabel" textFill="#ff2828">
                <font>
                   <Font size="20.0" />
                </font></Label>

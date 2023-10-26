@@ -8,26 +8,26 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MenuPageController">
    <children>
-      <TableView fx:id="menuTable" layoutX="58.0" layoutY="176.0" prefHeight="511.0" prefWidth="1175.0">
+      <TableView fx:id="menuTable" layoutX="50.0" layoutY="170.0" prefHeight="500.0" prefWidth="1180.0">
         <columns>
-            <TableColumn fx:id="pictureColumn" prefWidth="60.0" text="รูป" />
-            <TableColumn fx:id="nameColumn" prefWidth="393.0" text="ชื่อเมนู" />
-            <TableColumn fx:id="typeColumn" minWidth="0.0" prefWidth="436.0" text="ประเภท" />
-            <TableColumn fx:id="priceColumn" prefWidth="200.0" text="ราคา" />
-            <TableColumn fx:id="detailButtonColumn" prefWidth="85.0" text="detail" />
+            <TableColumn fx:id="pictureColumn" editable="false" prefWidth="60.0" sortable="false" />
+            <TableColumn fx:id="nameColumn" editable="false" prefWidth="670.0" sortable="false" text="ชื่อเมนู" />
+            <TableColumn fx:id="typeColumn" editable="false" minWidth="0.0" prefWidth="175.0" sortable="false" text="ประเภท" />
+            <TableColumn fx:id="priceColumn" editable="false" prefWidth="174.0" text="ราคา" />
+            <TableColumn fx:id="detailButtonColumn" editable="false" prefWidth="100.0" sortable="false" text="รายละเอียด" />
         </columns>
       </TableView>
-      <Pane prefHeight="65.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
+      <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
          <children>
-            <Button layoutX="7.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="49.0" prefWidth="95.0" text="ย้อนกลับ" />
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
          </children>
       </Pane>
-      <Button layoutX="500.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleAllButton" prefHeight="40.0" prefWidth="90.0" text="all" />
+      <Button layoutX="500.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleAllButton" prefHeight="40.0" prefWidth="90.0" text="ทั้งหมด" />
       <Button layoutX="625.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleTeaButton" prefHeight="40.0" prefWidth="90.0" text="ชา" />
       <Button layoutX="750.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleCoffeeButton" prefHeight="40.0" prefWidth="90.0" text="กาแฟ" />
       <Button layoutX="875.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleSodaButton" prefHeight="40.0" prefWidth="90.0" text="โซดา" />
       <Button layoutX="1000.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleCocaoButton" prefHeight="40.0" prefWidth="90.0" text="โกโก้" />
-      <Button layoutX="1125.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleMilkButton" prefHeight="40.0" prefWidth="90.0" text="นมสด" />
-      <Button layoutX="106.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="49.0" prefWidth="269.0" text="เพิ่มเมนู" />
+      <Button layoutX="1125.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleMilkButton" prefHeight="40.0" prefWidth="90.0" text="นม" />
+      <Button layoutX="100.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="50.0" prefWidth="300.0" text="เพิ่มเมนู" />
    </children>
 </AnchorPane>

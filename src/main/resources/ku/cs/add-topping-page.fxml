@@ -15,37 +15,36 @@
                 <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
             </children>
         </Pane>
-      <Pane fx:id="detailPane" layoutX="240.0" layoutY="90.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles/chanom.css">
+      <Pane fx:id="detailPane" layoutX="415.0" layoutY="185.0" prefHeight="350.0" prefWidth="450.0" stylesheets="@styles/chanom.css">
          <children>
-              <TextField fx:id="nameTextField" layoutX="544.0" layoutY="90.0" promptText="ชื่อท็อปปิ้ง">
+              <TextField fx:id="nameTextField" layoutX="180.0" layoutY="80.0" promptText="ชื่อท็อปปิ้ง">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-              <TextField fx:id="priceTextField" layoutX="544.0" layoutY="130.0" promptText="ราคา">
+              <TextField fx:id="priceTextField" layoutX="180.0" layoutY="120.0" promptText="ราคา">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-              <Button layoutX="515.0" layoutY="485.0" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="60.0" prefWidth="200.0" text="ยืนยัน">
+              <Button layoutX="125.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleAddToppingButton" prefHeight="60.0" prefWidth="200.0" text="ยืนยัน">
                <font>
                   <Font size="30.0" />
                </font>
             </Button>
-            <Pane layoutX="29.0" layoutY="50.0" prefHeight="500.0" prefWidth="400.0">
-               <styleClass>
-                  <String fx:value="pane-inFrame1" />
-                  <String fx:value="curve" />
-               </styleClass>
-            </Pane>
-            <Label layoutX="450.0" layoutY="80.0" text="ชื่อ">
+            <Label layoutX="85.0" layoutY="70.0" text="ชื่อ">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="450.0" layoutY="120.0" text="ราคา">
+            <Label layoutX="85.0" layoutY="110.0" text="ราคา">
                <font>
                   <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="notificationLabel" layoutX="85.0" layoutY="170.0" text="NotificationLabel" textFill="#ff2828">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Label>
          </children>

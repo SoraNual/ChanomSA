@@ -45,34 +45,52 @@ public class AddMenuPageController {
 
         ObservableList<String > menuTypes = FXCollections.observableArrayList("ชา","กาแฟ","โซดา","โกโก้","นม" );
         typeComboBox.setItems(menuTypes);
-        notificationLabel.setVisible(false);
+        notificationLabel.setText("");
     }
 
     @FXML
     private void handleAddMenuButton(ActionEvent event) throws SQLException {
         // อ่านข้อมูลเมนูจาก fxml
-        String name = nameTextField.getText();
-        double price = Double.parseDouble(priceTextField.getText());
-        String type = typeComboBox.getValue().toString();
-        // check input
-        if (Objects.equals(name, "")){
-            notificationLabel.setVisible(true);
-            notificationLabel.setText("ชื่อเมนูไม่ถูกต้อง");
-            System.out.println("Input Error");
-            return;
-        }
+        String name;
+        double price;
+        String type;
+        // check input name
         try {
-            double priceValue = Double.parseDouble(priceTextField.getText());
-            System.out.println("Price as a double: " + priceValue);
+            name = nameTextField.getText();
+            if (Objects.equals(name, "")){
+                notificationLabel.setText("กรอกชื่อเมนู");
+                return;
+            }
+        }
+        catch (Exception err){
+            notificationLabel.setText("กรอกชื่อเมนู");
+            return;
+
+        }
+        //type
+        try {
+             type = typeComboBox.getValue().toString();
+        }
+        catch (Exception err){
+            notificationLabel.setText("กรอกประเภทเมนู");
+            return;
+
+        }
+
+
+        try {
+            price = Double.parseDouble(priceTextField.getText());
+            String priceString = priceTextField.getText();
+            System.out.println("Price as a double: " + price);
             if (price < 0 ){
-                notificationLabel.setVisible(true);
+
                 notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
                 System.out.println("Input Error");
                 return;
             }
         } catch (NumberFormatException e) {
-            notificationLabel.setVisible(true);
-            notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
+
+            notificationLabel.setText("กรอกราคาเมนู");
             System.err.println("Invalid price format: " + priceTextField.getText());
             return;
         }
@@ -88,7 +106,6 @@ public class AddMenuPageController {
                 String menuType = resultSet.getString("menu_type");
                 String menuName = resultSet.getString("menu_name");
                 if (Objects.equals(name, menuName)){
-                    notificationLabel.setVisible(true);
                     notificationLabel.setText("ชื่อเมนู \""+name+"\" มีอยู่ในระบบแล้ว");
                     System.out.println("Repeat Name");
                     return;

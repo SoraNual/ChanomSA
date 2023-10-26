@@ -3,6 +3,7 @@ package ku.cs.controllers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -38,7 +39,37 @@ public class ToppingPageController {
         System.out.println("-------ToppingPage------");
         // Set cell value factories
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("topping_name"));
+        nameColumn.setCellFactory(column -> {
+            return new TableCell<Topping, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("topping_price"));
+        priceColumn.setCellFactory(column -> {
+            return new TableCell<Topping, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         detailButtonColumn.setCellFactory(column -> {
             return new TableCell<Topping, String>() {
                 final Button button = new Button("See");
@@ -60,6 +91,7 @@ public class ToppingPageController {
                         setGraphic(null);
                     } else {
                         setGraphic(button);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ปุ่มอยู่ตรงกลาง
                     }
                 }
             };

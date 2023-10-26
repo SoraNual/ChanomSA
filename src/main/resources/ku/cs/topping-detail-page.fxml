@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.ToppingDetailPageController">
    <children>
@@ -16,72 +15,74 @@
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
          </children>
       </Pane>
-      <Pane fx:id="editDetailPane" layoutX="240.0" layoutY="92.0" prefHeight="600.0" prefWidth="800.0" styleClass="pane-frame" stylesheets="@styles/chanom.css" visible="false">
+      <Pane fx:id="editDetailPane" layoutX="415.0" layoutY="185.0" prefHeight="350.0" prefWidth="450.0" stylesheets="@styles/chanom.css">
          <children>
-            <Label fx:id="notificationLabel" layoutX="439.0" layoutY="242.0" text="Notification" textFill="#ff2828">
+            <Label fx:id="notificationLabel" layoutX="85.0" layoutY="170.0" text="NotificationLabel" textFill="#ff2828">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Pane layoutX="26.0" layoutY="50.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane-inFrame1" />
-            <Text layoutX="439.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ชื่อ">
+            <Button layoutX="261.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="40.0" prefWidth="150.0" text="ยกเลิก">
                <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Text layoutX="438.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ราคา">
+                  <Font size="20.0" />
+               </font></Button>
+            <Button layoutX="44.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleConfirmButton" prefHeight="40.0" prefWidth="150.0" text="ยืนยัน">
                <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <Button layoutX="456.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="25.0" prefWidth="95.0" text="ยกเลิก" />
-            <Button layoutX="568.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleConfirmButton" prefHeight="25.0" prefWidth="95.0" text="ยืนยัน" />
-            <TextField fx:id="nameTextField" layoutX="551.0" layoutY="100.0" promptText="ชื่อท็อปปิ้ง">
+                  <Font size="20.0" />
+               </font></Button>
+            <TextField fx:id="nameTextField" layoutX="180.0" layoutY="80.0" promptText="ชื่อท็อปปิ้ง">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="priceTextField" layoutX="551.0" layoutY="195.0" promptText="ราคา">
+            <TextField fx:id="priceTextField" layoutX="180.0" layoutY="120.0" promptText="ราคา">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
+            <Label layoutX="85.0" layoutY="70.0" text="ชื่อ">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="85.0" layoutY="110.0" text="ราคา">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
          </children>
+         <styleClass>
+            <String fx:value="pane-frame" />
+            <String fx:value="curve" />
+         </styleClass>
       </Pane>
-      <Pane fx:id="detailPane" layoutX="240.0" layoutY="90.0" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles/chanom.css">
+      <Pane fx:id="detailPane" layoutX="415.0" layoutY="185.0" prefHeight="350.0" prefWidth="450.0" stylesheets="@styles/chanom.css" visible="false">
          <children>
-            <Pane layoutX="29.0" layoutY="50.0" prefHeight="500.0" prefWidth="400.0">
-               <styleClass>
-                  <String fx:value="pane-inFrame1" />
-                  <String fx:value="curve" />
-               </styleClass>
-               <children>
-                  <Button layoutX="100.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="50.0" prefWidth="200.0" text="แก้ไข">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Button>
-               </children></Pane>
-            <Label fx:id="toppingNameLabel" layoutX="545.0" layoutY="80.0" text="toppingNameLabel">
+            <Label fx:id="toppingNameLabel" layoutX="170.0" layoutY="70.0" text="toppingNameLabel">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="toppingPriceLabel" layoutX="545.0" layoutY="120.0" text="toppingPriceLabel">
+            <Label fx:id="toppingPriceLabel" layoutX="170.0" layoutY="110.0" text="toppingPriceLabel">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="450.0" layoutY="80.0" text="ชื่อ">
+            <Label layoutX="85.0" layoutY="70.0" text="ชื่อ">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="450.0" layoutY="120.0" text="ราคา">
+            <Label layoutX="85.0" layoutY="110.0" text="ราคา">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
+            <Button layoutX="125.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="50.0" prefWidth="200.0" text="แก้ไข">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Button>
          </children>
          <styleClass>
             <String fx:value="pane-frame" />

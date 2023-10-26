@@ -10,7 +10,10 @@ public class Order {
     private String status;
     private String use_phone_number;
 
-    public Order(double order_price, String status, String use_phone_number) {
+    public Order() {
+    }
+    public Order(int order_id,double order_price, String status, String use_phone_number) {
+        this.order_id = order_id;
         this.order_price = order_price;
         this.status = status;
         this.use_phone_number = use_phone_number;

@@ -3,6 +3,7 @@ package ku.cs.controllers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -44,8 +45,53 @@ public class MenuPageController {
         System.out.println("-------MenuPage------");
         // Set cell value factories
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("menu_type"));
+        typeColumn.setCellFactory(column -> {
+            return new TableCell<Menu , String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
+        nameColumn.setCellFactory(column -> {
+            return new TableCell<Menu , String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(item);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("menu_price"));
+        priceColumn.setCellFactory(column -> {
+            return new TableCell<Menu, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         pictureColumn.setCellFactory(column -> new TableCell<Menu, ImageView>() {
             final ImageView imageView = new ImageView();
             {
@@ -88,6 +134,7 @@ public class MenuPageController {
                         setGraphic(null);
                     } else {
                         setGraphic(button);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ปุ่มอยู่ตรงกลาง
                     }
                 }
             };
@@ -120,9 +167,10 @@ public class MenuPageController {
             System.out.println("--Update database to "+typeToShow+" --");
             while (resultSet.next()) {
                 int menuId = resultSet.getInt("menu_id");
+                String menuType = resultSet.getString("menu_type");
                 String menuName = resultSet.getString("menu_name");
                 double menuPrice = resultSet.getDouble("menu_price");
-                menu.add(new Menu(menuId,typeToShow, menuName, menuPrice));
+                menu.add(new Menu(menuId,menuType, menuName, menuPrice));
 
                 System.out.println(typeToShow+" "+menuName+" "+menuPrice);
             }

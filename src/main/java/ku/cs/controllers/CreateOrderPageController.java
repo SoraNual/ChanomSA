@@ -4,18 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import ku.cs.models.Menu;
+import ku.cs.models.Order;
 import ku.cs.models.OrderAllDetail;
 import ku.cs.models.OrderDetail;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateOrderPageController {
     // chooseMenuPane
@@ -45,6 +50,8 @@ public class CreateOrderPageController {
     private Label quantityLabel;
     @FXML
     private Label totalLabel;
+    @FXML
+    private ImageView selectImage;
 
     //will add to order detail
     private int menuIDToAddInOrderDetail;
@@ -55,6 +62,8 @@ public class CreateOrderPageController {
     private String toppingNameToAddInOrderDetail;
     private int quantityToAddInOrderDetail;
     private double totalPriceToAddInOrderDetail;
+
+    private Image menuImage;
 
     private  List<OrderAllDetail> orderAllDetails = new ArrayList<>();
     private int orderNow = 0;
@@ -67,9 +76,9 @@ public class CreateOrderPageController {
     @FXML
     private TableColumn<OrderAllDetail, String> orderDetailToppingNameColumn;
     @FXML
-    private TableColumn<OrderAllDetail, String> orderDetailQuantityColumn;
+    private TableColumn<OrderAllDetail, Integer> orderDetailQuantityColumn;
     @FXML
-    private TableColumn<OrderAllDetail, String> orderDetailTotalPriceColumn;
+    private TableColumn<OrderAllDetail, Double> orderDetailTotalPriceColumn;
      @FXML
      private TableColumn<OrderAllDetail, String> orderDetailDeleteButtonColumn;
     @FXML
@@ -109,6 +118,21 @@ public class CreateOrderPageController {
         }
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
+        nameColumn.setCellFactory(column -> {
+            return new TableCell<Menu, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         menuPictureColumn.setCellFactory(column -> new TableCell<Menu, ImageView>() {
             final ImageView imageView = new ImageView();
             {
@@ -161,6 +185,7 @@ public class CreateOrderPageController {
                         menuNameToAddInOrderDetail = menu.getMenu_name();
                         menuTypeToAddInOrderDetail = menu.getMenu_type();
                         menuPriceToAddInOrderDetail = menu.getMenu_price();
+                        menuImage = menu.getPicture();
 
                         // Now you can send the menu_name to another action
                         handleButtonAction();
@@ -174,6 +199,7 @@ public class CreateOrderPageController {
                         setGraphic(null);
                     } else {
                         setGraphic(button);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
                     }
                 }
             };
@@ -203,6 +229,8 @@ public class CreateOrderPageController {
         toppingComboBox.getSelectionModel().select(0);
         quantityLabel.setText("1");
         createOrderNotificationLabel.setText("");
+
+            selectImage.setImage(menuImage);  // Set the image to the ImageView
 
     }
 
@@ -336,7 +364,7 @@ public class CreateOrderPageController {
             e.printStackTrace();
         }
         totalPriceToAddInOrderDetail = (menuPriceToAddInOrderDetail+toppingPrice)*quantityToAddInOrderDetail;
-        totalLabel.setText("รวม :"+totalPriceToAddInOrderDetail+" บาท");
+        totalLabel.setText("รวม "+totalPriceToAddInOrderDetail+" บาท");
 
 
     }
@@ -395,10 +423,71 @@ public class CreateOrderPageController {
     private void updateOrderTable(){
 
         orderDetailMenuNameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
+        orderDetailMenuNameColumn.setCellFactory(column -> {
+            return new TableCell<OrderAllDetail, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         orderDetailToppingNameColumn.setCellValueFactory(new PropertyValueFactory<>("topping_name"));
+        orderDetailToppingNameColumn.setCellFactory(column -> {
+            return new TableCell<OrderAllDetail, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
 
         orderDetailQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        orderDetailQuantityColumn.setCellFactory(column -> {
+            return new TableCell<OrderAllDetail, Integer>() {
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
         orderDetailTotalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("total_price"));
+        orderDetailTotalPriceColumn.setCellFactory(column -> {
+            return new TableCell<OrderAllDetail, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
+                    } else {
+                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
+                    }
+                }
+            };
+        });
+
         orderDetailDeleteButtonColumn.setCellFactory(column -> {
             return new TableCell<OrderAllDetail, String>() {
                 final Button button = new Button("x");
@@ -430,6 +519,7 @@ public class CreateOrderPageController {
                         setGraphic(null);
                     } else {
                         setGraphic(button);
+                        setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
                     }
                 }
             };
@@ -541,6 +631,10 @@ public class CreateOrderPageController {
             updateOrderPriceStatement.close();
             orderAllDetails = new ArrayList<>();
             updateOrderTable();
+            // go to member check
+            Order order = new Order(orderNow,totalOrderPrice,"ยังไม่ชำระเงิน","");
+            goToCheckMember(order);
+
 
         }
          catch (SQLException e) {
@@ -585,7 +679,16 @@ public class CreateOrderPageController {
         updateDatabase();
     }
 
-
+    private void goToCheckMember(Order order){
+        try {
+            // Pass the selected menu to the menuDetailPage
+            Map<String, Object> data = new HashMap<>();
+            data.put("order", order);
+            com.github.saacsos.FXRouter.goTo("check-member");
+        } catch (Exception err){
+            System.out.println("Can't go to check-member");
+        }
+    }
 
     @FXML
     public void handleBackButton(ActionEvent actionEvent){
