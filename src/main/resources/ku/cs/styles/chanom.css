@@ -18,7 +18,7 @@
 
 .button-confirm{
     -fx-background-color: #C2FFC5;
-    -fx-background-radius: 10px;
+
 }
 
 .button-confirm:hover{
@@ -29,14 +29,24 @@
     -fx-background-color: #5edd63;
 }
 
+.button-cancel{
+    -fx-background-color: #FFA3A3;
 
+}
+.button-cancel:hover{
+    -fx-background-color: #c37777;
+}
+
+.button-cancel:pressed{
+    -fx-background-color: #f81c1c;
+}
 
 .anchor-pane{
     -fx-background-color: #8886ff;
 }
 
 .rounded{
-    -fx-background-radius: 10px;
+    -fx-background-radius: 18px;
 }
 
 .pane-background {
@@ -57,4 +67,13 @@
     -fx-background-color: #8b9fe4;
 }
 
+.tableview-receipt{
+    -fx-table-cell-border-color: transparent;
+}
 
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #E6E5FF;
+}

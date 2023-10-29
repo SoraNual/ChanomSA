@@ -1,22 +1,19 @@
 package ku.cs.controllers;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import ku.cs.models.Menu;
+import javafx.scene.layout.Pane;
 import ku.cs.models.Order;
 import ku.cs.models.OrderAllDetail;
+import ku.cs.models.QueueNumber;
 import ku.cs.services.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +45,7 @@ public class CheckMemberPageController {
     @FXML private ToggleGroup radioGroup;
     @FXML private Button checkMemberButton;
     @FXML private Button confirmButton;
+    @FXML private Pane receiptPane;
     private Order currentOrder;
     private List<OrderAllDetail> orderAllDetails = new ArrayList<>();
 
@@ -67,45 +65,82 @@ public class CheckMemberPageController {
         orderTotalQuantityLabel.setText(currentOrder.getOrder_total_quantity()+"");
         orderTotalPriceLabel.setText(currentOrder.getOrder_price()+"");
 
-        readDB();
+        receiptPane.setVisible(false);
+
+        readDB("od");
+        readDB("q");
     }
 
-    private void readDB(){
+    private void readDB(String readPrompt){
+        if(readPrompt.equals("od")){
+            // read for order detail table
+            String query = "SELECT m.menu_name, t.topping_name, od.quantity, od.total_price " +
+                    "FROM orderdetails as od " +
+                    "JOIN menus as m ON m.menu_id = od.menu_id JOIN toppings as t ON t.topping_id = od.topping_id " +
+                    "WHERE od.order_id = ? ORDER BY m.menu_id;";
 
-        // read for order detail table
-        String query = "SELECT m.menu_name, t.topping_name, od.quantity, od.total_price " +
-                "FROM orderdetails as od JOIN orders as o ON od.order_id = o.order_id " +
-                "JOIN menus as m ON m.menu_id = od.menu_id JOIN toppings as t ON t.topping_id = od.topping_id " +
-                "WHERE od.order_id = ? ORDER BY m.menu_id;";
+            try {
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setInt(1, currentOrder.getOrder_id());
+                ResultSet resultSet = statement.executeQuery();
 
-        try {
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, currentOrder.getOrder_id());
-            ResultSet resultSet = statement.executeQuery();
+                System.out.println("--Update Order Details Table--");
+                while (resultSet.next()) {
+                    String menuName = resultSet.getString("menu_name");
+                    String toppingName = resultSet.getString("topping_name");
+                    int quantity = resultSet.getInt("quantity");
+                    double orderPrice = resultSet.getDouble("total_price");
 
-            System.out.println("--Update Order Table--");
-            while (resultSet.next()) {
-                String menuName = resultSet.getString("menu_name");
-                String toppingName = resultSet.getString("topping_name");
-                int quantity = resultSet.getInt("quantity");
-                double orderPrice = resultSet.getDouble("total_price");
+                    OrderAllDetail orderAllDetail = new OrderAllDetail(menuName,toppingName,quantity,orderPrice);
+                    orderAllDetails.add(orderAllDetail);
 
-                OrderAllDetail orderAllDetail = new OrderAllDetail(menuName,toppingName,quantity,orderPrice);
-                orderAllDetails.add(orderAllDetail);
+                    System.out.println(menuName+" "+toppingName+" "+quantity+" "+orderPrice);
+                }
 
-                System.out.println(menuName+" "+toppingName+" "+quantity+" "+orderPrice);
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            updateOrderDetailsTable();
+        } else if (readPrompt.equals("q")) {
+            // read for order detail table
+            String query = "SELECT queue_num, receipt_dateTime FROM receipts WHERE order_id = ?";
 
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setInt(1, currentOrder.getOrder_id()-1);
+                ResultSet resultSet = statement.executeQuery();
+
+                System.out.println("--Getting Latest Queue--");
+                while (resultSet.next()) {
+                    int queueNum = resultSet.getInt("queue_num");
+                    LocalDate receiptDate = resultSet.getTimestamp("receipt_dateTime").toLocalDateTime().toLocalDate();
+
+                    setQueueInformation(queueNum,receiptDate);
+
+                    System.out.println(queueNum+": "+receiptDate);
+                }
+
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        updateOrderTable();
+
     }
-    private void updateOrderTable(){
+
+    private void setQueueInformation(int queueNum, LocalDate receiptDate){
+        System.out.println("set queue "+queueNum);
+        QueueNumber.setLastQueueNumber(queueNum);
+        QueueNumber.setLatestDateInQueue(receiptDate);
+    }
+    private void updateOrderDetailsTable(){
 
         orderDetailMenuNameColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
         orderDetailMenuNameColumn.setCellFactory(column -> {
@@ -181,15 +216,6 @@ public class CheckMemberPageController {
     }
 
     @FXML
-    public void handleBackButton(ActionEvent actionEvent){
-        try {
-            FXRouter.goTo("main");
-        } catch (Exception err){
-            System.out.println("Can't go back");
-        }
-    }
-
-    @FXML
     public void handleCheckButton(ActionEvent actionEvent){
         String phoneNum = phoneTextField.getText().trim();
         String memberName;
@@ -236,14 +262,22 @@ public class CheckMemberPageController {
 
     @FXML
     public void handleConfirmButton(ActionEvent actionEvent){
+        String phoneNum = phoneTextField.getText();
+
+        checkStatusLabel.disableProperty().unbind();
+        checkStatusLabel.setVisible(false);
+        notUseOfferRadio.setDisable(true);
+        useOfferRadio.setDisable(true);
+
         if(checkStatusLabel.getText().equals("พบรายชื่อ")){
+            currentOrder.setUse_phone_number(phoneNum);
             String updatePhoneNum = "UPDATE orders SET use_phone_number = ? WHERE order_id = ?";
-            checkStatusLabel.setText("");
+
             try {
                 Connection connection = DatabaseConnection.getConnection();
 
                 PreparedStatement updateStatement = connection.prepareStatement(updatePhoneNum);
-                updateStatement.setString(1, phoneTextField.getText());
+                updateStatement.setString(1, phoneNum);
                 updateStatement.setInt(2, currentOrder.getOrder_id());
                 updateStatement.executeUpdate();
 
@@ -256,10 +290,43 @@ public class CheckMemberPageController {
             }
         }
 
-        try {
-            FXRouter.goTo("main");
-        } catch (Exception err){
-            System.out.println("Can't go main");
+        receiptPane.setVisible(true);
+        confirmButton.disableProperty().unbind();
+        confirmButton.setDisable(true);
+
+    }
+
+    @FXML public void handleReceiptIssueButton(){
+        System.out.println("phone"+ currentOrder.getUse_phone_number());
+        try  {
+            Connection connection = DatabaseConnection.getConnection();
+            int currentQueue =  QueueNumber.generateQueueNumber();
+            double discount = 1.;
+            if(checkStatusLabel.getText().equals("พบรายชื่อ")){
+                discount = 0.9;
+            }
+
+            // เขียนคำสั่ง SQL สำหรับ INSERT ข้อมูล
+            String insertSQL = "INSERT INTO receipts (order_id, queue_num, net_price) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+                preparedStatement.setInt(1, currentOrder.getOrder_id());
+                preparedStatement.setInt(2, currentQueue);
+                preparedStatement.setDouble(3, Math.floor(currentOrder.getOrder_price()*discount));
+                // ทำการ INSERT ข้อมูล
+                preparedStatement.executeUpdate();
+                //clear
+                System.out.println(">> เพี่มใบเสร็จที่ผูกกับออร์เดอร์ id "+ currentOrder.getOrder_id()+ " ซึ่งมีราคารวม: "+ currentOrder.getOrder_price() + " บาท\nซึ่งมีคิวหมายเลข " + currentQueue);
+                currentOrder.setQueue_number(currentQueue);
+                try {
+                    FXRouter.goTo("receipt-issue", currentOrder);
+                } catch (Exception err){
+                    System.out.println("Can't go to receipt issue page");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
     }
 }

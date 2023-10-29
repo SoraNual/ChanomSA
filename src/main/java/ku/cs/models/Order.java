@@ -9,7 +9,7 @@ public class Order {
     private Timestamp order_dateTime;
     private String status;
     private String use_phone_number;
-
+    private int queue_number;
     public Order() {
     }
     public Order(int order_id, int order_total_quantity, double order_price, String status, String use_phone_number) {
@@ -58,5 +58,13 @@ public class Order {
 
     public void setOrder_total_quantity(int order_total_quantity) {
         this.order_total_quantity = order_total_quantity;
+    }
+
+    public int getQueue_number() {
+        return queue_number;
+    }
+
+    public void setQueue_number(int queue_number) {
+        this.queue_number = queue_number;
     }
 }

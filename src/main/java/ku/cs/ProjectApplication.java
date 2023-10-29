@@ -36,6 +36,7 @@ public class ProjectApplication extends Application {
         FXRouter.when("add-member", packageStr+"add-member-page.fxml");
 
         FXRouter.when("receipt", packageStr+"receipt-page.fxml");
+        FXRouter.when("receipt-issue",packageStr+"receipt-issue-page.fxml");
 
         FXRouter.when("sales-main", packageStr+"sales-record-main-page.fxml");
     }

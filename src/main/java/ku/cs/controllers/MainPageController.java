@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 public class MainPageController {
 
     @FXML private AnchorPane scenePane;
@@ -11,7 +14,8 @@ public class MainPageController {
     @FXML
     public void initialize(){
         System.out.println("-------MainPage------");
-        //setup
+        //
+        System.out.println(Timestamp.valueOf(LocalDateTime.now()));
 
     }
 

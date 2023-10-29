@@ -14,9 +14,9 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.CheckMemberPageController">
    <children>
-      <Pane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background">
+      <Pane layoutY="60.0" prefHeight="660.0" prefWidth="1280.0" styleClass="pane-background">
          <children>
-            <Pane layoutX="502.0" layoutY="284.0" prefHeight="303.0" prefWidth="747.0" stylesheets="@styles/chanom.css">
+            <Pane layoutX="516.0" layoutY="50.0" prefHeight="356.0" prefWidth="740.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />
@@ -31,7 +31,7 @@
                      <children>
                         <Label layoutX="23.0" layoutY="13.0" text="Order ID">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                      </children>
@@ -50,11 +50,17 @@
                         <Font size="20.0" />
                      </font>
                   </RadioButton>
-                  <Button fx:id="checkMemberButton" layoutX="426.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleCheckButton" prefHeight="40.0" prefWidth="129.0" text="เช็ครายชื่อ" />
-                  <Button fx:id="confirmButton" layoutX="604.0" layoutY="242.0" mnemonicParsing="false" onAction="#handleConfirmButton" prefHeight="40.0" prefWidth="129.0" style="-fx-background-color: C2FFC5;" styleClass="button-confirm" text="ยืนยันตัวเลือก" />
-                  <Label fx:id="orderIDLabel" layoutX="165.0" layoutY="29.0" text="OrderIDLabel">
+                  <Button fx:id="checkMemberButton" layoutX="426.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleCheckButton" prefHeight="40.0" prefWidth="129.0" text="เช็ครายชื่อ">
+                     <font>
+                        <Font size="19.0" />
+                     </font></Button>
+                  <Button fx:id="confirmButton" layoutX="597.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleConfirmButton" prefHeight="40.0" prefWidth="129.0" styleClass="button-confirm" text="ยืนยัน">
                      <font>
                         <Font size="20.0" />
+                     </font></Button>
+                  <Label fx:id="orderIDLabel" layoutX="145.0" layoutY="32.0" text="OrderIDLabel">
+                     <font>
+                        <Font size="16.0" />
                      </font>
                   </Label>
                   <Label fx:id="nameLabel" layoutX="242.0" layoutY="247.0" text="nameLabel">
@@ -69,15 +75,23 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="24.0" layoutY="165.0" prefHeight="541.0" prefWidth="459.0" stylesheets="@styles/chanom.css">
+            <Pane layoutX="24.0" layoutY="50.0" prefHeight="558.0" prefWidth="479.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />
                </styleClass>
                <children>
-                  <Pane prefHeight="541.0" prefWidth="460.0">
+                  <Pane layoutX="23.0" layoutY="25.0" prefHeight="518.0" prefWidth="433.0">
                      <children>
-                        <Pane layoutX="21.0" layoutY="473.0" prefHeight="40.0" prefWidth="419.0">
+                        <TableView fx:id="orderDetailTable" layoutX="7.0" layoutY="14.0" prefHeight="437.0" prefWidth="419.0" styleClass="rounded">
+                           <columns>
+                              <TableColumn fx:id="orderDetailMenuNameColumn" editable="false" prefWidth="132.0" text="เมนู" />
+                              <TableColumn fx:id="orderDetailToppingNameColumn" prefWidth="108.0" text="ท็อปปิ้ง" />
+                              <TableColumn fx:id="orderDetailQuantityColumn" prefWidth="71.0" text="จำนวน" />
+                              <TableColumn fx:id="orderDetailTotalPriceColumn" prefWidth="107.0" text="ราคา" />
+                           </columns>
+                        </TableView>
+                        <Pane layoutX="7.0" layoutY="464.0" prefHeight="40.0" prefWidth="419.0">
                            <children>
                               <Label fx:id="orderTotalPriceLabel" layoutX="340.0" layoutY="12.0" text="orderTotalPriceLabel" />
                               <Label layoutX="21.0" layoutY="12.0" text="Total" />
@@ -88,14 +102,6 @@
                               <String fx:value="rounded" />
                            </styleClass>
                         </Pane>
-                        <TableView fx:id="orderDetailTable" layoutX="21.0" layoutY="47.0" prefHeight="390.0" prefWidth="419.0" styleClass="rounded">
-                           <columns>
-                              <TableColumn fx:id="orderDetailMenuNameColumn" editable="false" prefWidth="132.0" text="เมนู" />
-                              <TableColumn fx:id="orderDetailToppingNameColumn" prefWidth="108.0" text="ท็อปปิ้ง" />
-                              <TableColumn fx:id="orderDetailQuantityColumn" prefWidth="71.0" text="จำนวน" />
-                              <TableColumn fx:id="orderDetailTotalPriceColumn" prefWidth="107.0" text="ราคา" />
-                           </columns>
-                        </TableView>
                      </children>
                      <styleClass>
                         <String fx:value="pane-inFrame2" />
@@ -104,14 +110,26 @@
                   </Pane>
                </children>
             </Pane>
+            <Pane fx:id="receiptPane" layoutX="516.0" layoutY="421.0" prefHeight="189.0" prefWidth="740.0">
+               <styleClass>
+                  <String fx:value="pane-frame" />
+                  <String fx:value="rounded" />
+               </styleClass>
+               <children>
+                  <Button layoutX="285.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleReceiptIssueButton" prefHeight="56.0" prefWidth="171.0" text="ออกใบเสร็จ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
          </children>
       </Pane>
-      <Pane prefHeight="151.0" prefWidth="1280.0" styleClass="pane-top">
+      <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top">
          <children>
-            <Button layoutX="24.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="56.0" prefWidth="146.0" text="&lt; กลับ" />
-            <Label layoutX="182.0" layoutY="57.0" text="ตรวจสอบการเป็นสมาชิก" textFill="WHITE">
+            <Label layoutX="37.0" layoutY="4.0" text="ตรวจสอบการเป็นสมาชิก" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Label>
          </children>

@@ -83,7 +83,11 @@
       </Pane>
       <Pane fx:id="chooseMenuPane" layoutX="560.0" layoutY="78.0" prefHeight="621.0" prefWidth="709.0">
          <children>
-            <Pane layoutY="100.0" prefHeight="521.0" prefWidth="709.0" styleClass="pane-frame" />
+            <Pane layoutY="100.0" prefHeight="521.0" prefWidth="709.0">
+               <styleClass>
+                  <String fx:value="pane-frame" />
+                  <String fx:value="rounded" />
+               </styleClass></Pane>
             <TableView fx:id="menuTable" layoutX="29.0" layoutY="130.0" prefHeight="460.0" prefWidth="652.0">
                <columns>
                   <TableColumn fx:id="menuPictureColumn" editable="false" prefWidth="58.0" sortable="false" />
@@ -123,6 +127,11 @@
                <font>
                   <Font size="15.0" />
                </font></Button>
+            <Label layoutX="117.0" layoutY="6.0" text="สร้างออร์เดอร์" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane layoutX="22.0" layoutY="134.0" prefHeight="566.0" prefWidth="525.0">
@@ -132,6 +141,16 @@
                   <Font size="15.0" />
                </font>
             </Label>
+            <Button layoutX="41.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleClearButton" prefHeight="40.0" prefWidth="120.0" styleClass="button-cancel" text="clear">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="382.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleAcceptCreateOrderButton" prefHeight="40.0" prefWidth="120.0" styleClass="button-confirm" text="ยืนยัน">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
          <styleClass>
             <String fx:value="pane-frame" />
@@ -168,13 +187,5 @@
             </TableView>
          </children>
       </Pane>
-      <Button layoutX="43.0" layoutY="602.0" mnemonicParsing="false" onAction="#handleClearButton" prefHeight="40.0" prefWidth="120.0" text="clear">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
-      <Button layoutX="408.0" layoutY="602.0" mnemonicParsing="false" onAction="#handleAcceptCreateOrderButton" prefHeight="40.0" prefWidth="120.0" text="ยืนยัน">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
    </children>
 </AnchorPane>
