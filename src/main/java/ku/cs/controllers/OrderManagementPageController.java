@@ -12,6 +12,7 @@ import ku.cs.models.OrderAllDetail;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class OrderManagementPageController {
@@ -19,7 +20,7 @@ public class OrderManagementPageController {
     @FXML private TableView<Order> ordersTable;
     @FXML private TableColumn<Order, Integer> queueColumn;
     @FXML private TableColumn<Order, Integer> orderTotalQuantityColumn;
-    @FXML private TableColumn<Order, Timestamp> orderDateTimeColumn;
+    @FXML private TableColumn<Order, LocalDateTime> orderDateTimeColumn;
     @FXML private TableColumn<Order, String> phoneColumn;
     // Order Details table
     @FXML
@@ -36,16 +37,19 @@ public class OrderManagementPageController {
     @FXML private Label queueLabel;
     @FXML private Label orderTotalQuantityLabel;
     @FXML private Label orderTotalPriceLabel;
+    @FXML private Label useMembershipLabel;
     @FXML private ComboBox<String> orderStatusComboBox;
-
+    @FXML private Button cancelOrderButton;
+    @FXML private Button advanceOrderStatusButton;
     private Order currentOrder;
-    private ArrayList<OrderAllDetail> orderAllDetails;
-    private ArrayList<Order> orders;
-    private ObservableList<String> orderStatusList = FXCollections.observableArrayList("ยังไม่ชำระเงิน","ชำระเงินแล้ว","รอรับสินค้า","รับสินค้าแล้ว","ถูกปฎิเสธ");
+    private final ArrayList<OrderAllDetail> orderAllDetails = new ArrayList<>();
+    private final ArrayList<Order> orders = new ArrayList<>();
+    private final ObservableList<String> orderStatusList = FXCollections.observableArrayList("ยังไม่ชำระเงิน","ชำระเงินแล้ว","รอรับสินค้า","รับสินค้าแล้ว","ถูกปฏิเสธ");
     private String readPrompt;
     private String currentOrderStatus;
     public void initialize() {
         queueLabel.setText("");
+        useMembershipLabel.setText("");
 
         currentOrder = ordersTable.getSelectionModel().getSelectedItem();
         orderTotalQuantityLabel.setText("");
@@ -56,8 +60,9 @@ public class OrderManagementPageController {
         currentOrderStatus = orderStatusComboBox.getSelectionModel().getSelectedItem();
         System.out.println(currentOrderStatus);
 
-
-
+        handleStatusChangingButtons();
+        handleOrderTable();
+        readDB("o");
 
 
     }
@@ -75,12 +80,20 @@ public class OrderManagementPageController {
                 statement.setInt(1, currentOrder.getOrder_id());
                 ResultSet resultSet = statement.executeQuery();
 
-                System.out.println("--Update Order Table--");
+                System.out.println("--Update Order Details Table--");
                 while (resultSet.next()) {
                     String menuName = resultSet.getString("menu_name");
                     String toppingName = resultSet.getString("topping_name");
                     int quantity = resultSet.getInt("quantity");
                     double orderPrice = resultSet.getDouble("total_price");
+
+                    if(currentOrder.getUse_phone_number() != null)
+                        useMembershipLabel.setText("มีการใช้สิทธิ์ของสมาชิก");
+                    else
+                        useMembershipLabel.setText("");
+                    queueLabel.setText("#"+currentOrder.getQueue_number());
+                    orderTotalQuantityLabel.setText(currentOrder.getOrder_total_quantity()+" แก้ว");
+                    orderTotalPriceLabel.setText(currentOrder.getOrder_price()+" บาท");
 
                     OrderAllDetail orderAllDetail = new OrderAllDetail(menuName,toppingName,quantity,orderPrice);
                     orderAllDetails.add(orderAllDetail);
@@ -94,9 +107,45 @@ public class OrderManagementPageController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             updateOrderDetailsTable();
+
         } else if (readPrompt.equals("o")) {
-            //TODO
+            String query = "SELECT o.order_id, o.order_dateTime, o.order_total_quantity, o.use_phone_number, r.queue_num, r.net_price " +
+                    "FROM orders as o JOIN receipts as r ON r.order_id = o.order_id WHERE o.status = ?";
+
+            try {
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, currentOrderStatus);
+                ResultSet resultSet = statement.executeQuery();
+
+                System.out.println("--Update Order Table--");
+                while (resultSet.next()) {
+                    int orderID = resultSet.getInt("order_id");
+                    LocalDateTime orderDateTime = resultSet.getTimestamp("order_dateTime").toLocalDateTime();
+                    int orderTotalQuantity = resultSet.getInt("order_total_quantity");
+                    String phoneNumber = resultSet.getString("use_phone_number");
+                    int queueNum = resultSet.getInt("queue_num");
+                    double netPrice = resultSet.getDouble("net_price");
+
+                    Order order = new Order(orderID, orderTotalQuantity, netPrice, currentOrderStatus, phoneNumber);
+                    order.setQueue_number(queueNum);
+                    order.setOrder_dateTime(orderDateTime);
+                    orders.add(order);
+
+                    System.out.println("orderID "+ orderID + " orderTotalQuantity " + orderTotalQuantity + " netPrice " +  netPrice + " Status " + currentOrderStatus +
+                            " phone " + phoneNumber + " queue " + queueNum + " DateTime " + orderDateTime);
+                }
+
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            updateOrdersTable();
         }
     }
     private void updateOrderDetailsTable(){
@@ -111,7 +160,7 @@ public class OrderManagementPageController {
                         setText(null);
                         setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
                     } else {
-                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setText(item); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
                         setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
                     }
                 }
@@ -127,7 +176,7 @@ public class OrderManagementPageController {
                         setText(null);
                         setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
                     } else {
-                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setText(item); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
                         setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
                     }
                 }
@@ -175,7 +224,7 @@ public class OrderManagementPageController {
     }
 
     private void updateOrdersTable(){
-        queueColumn.setCellValueFactory(new PropertyValueFactory<>("menu_name"));
+        queueColumn.setCellValueFactory(new PropertyValueFactory<>("queue_number"));
         queueColumn.setCellFactory(column -> {
             return new TableCell<Order, Integer>() {
                 @Override
@@ -191,11 +240,11 @@ public class OrderManagementPageController {
                 }
             };
         });
-        orderDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("topping_name"));
+        orderDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("order_dateTime"));
         orderDateTimeColumn.setCellFactory(column -> {
-            return new TableCell<Order, Timestamp>() {
+            return new TableCell<Order, LocalDateTime>() {
                 @Override
-                protected void updateItem(Timestamp item, boolean empty) {
+                protected void updateItem(LocalDateTime item, boolean empty) {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
@@ -208,7 +257,7 @@ public class OrderManagementPageController {
             };
         });
 
-        orderTotalQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        orderTotalQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("order_total_quantity"));
         orderTotalQuantityColumn.setCellFactory(column -> {
             return new TableCell<Order, Integer>() {
                 @Override
@@ -234,7 +283,7 @@ public class OrderManagementPageController {
                         setText(null);
                         setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อ cell ว่าง
                     } else {
-                        setText(String.valueOf(item)); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
+                        setText(item); // แปลงข้อมูลเป็น String แล้วกำหนดให้ setText
                         setAlignment(Pos.CENTER); // ตั้งค่าให้ข้อมูลอยู่ตรงกลางเมื่อมีข้อมูล
                     }
                 }
@@ -243,11 +292,82 @@ public class OrderManagementPageController {
         ordersTable.setItems(FXCollections.observableList(orders));
     }
 
-    @FXML private void handleOrderStatusComboBox(){
-        currentOrderStatus = orderStatusComboBox.getSelectionModel().getSelectedItem();
-        System.out.println(currentOrderStatus);
+    private void updateOrderStatusDB(){
+        String updatePhoneNum = "UPDATE orders SET status = ? WHERE order_id = ?";
+
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+
+            PreparedStatement updateStatement = connection.prepareStatement(updatePhoneNum);
+            updateStatement.setString(1, currentOrder.getStatus());
+            updateStatement.setInt(2, currentOrder.getOrder_id());
+            updateStatement.executeUpdate();
+
+
+            updateStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML private void handleOrderTable(){
+        ordersTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            currentOrder = newSelection;
+            orderDetailTable.getItems().clear();
+            if(newSelection != null)
+                readDB("od");
+        });
+
+    }
+    @FXML private void handleAdvanceOrderStatusChangeButton(){
+        String nextStatus = orderStatusList.get(orderStatusList.indexOf(currentOrderStatus)+1);
+        currentOrder.setStatus(nextStatus);
+
+        updateOrderStatusDB();
+        clearSelection();
+        clearOrderTable();
+        readDB("o");
     }
 
+    @FXML private void handleCancelOrderStatusChangeButton(){
+        currentOrder.setStatus("ถูกปฏิเสธ");
+
+        updateOrderStatusDB();
+        clearSelection();
+        clearOrderTable();
+        readDB("o");
+    }
+    @FXML private void handleOrderStatusComboBox(){
+        clearOrderTable();
+        clearSelection();
+
+        currentOrderStatus = orderStatusComboBox.getSelectionModel().getSelectedItem();
+
+        handleStatusChangingButtons();
+        System.out.println(currentOrderStatus);
+
+        readDB("o");
+    }
+    @FXML public void handleStatusChangingButtons(){
+
+        cancelOrderButton.setVisible(currentOrderStatus.equals("ยังไม่ชำระเงิน"));
+
+
+        if(currentOrderStatus.equals("ยังไม่ชำระเงิน")){
+            advanceOrderStatusButton.setVisible(true);
+            advanceOrderStatusButton.setText("ยืนยันการชำระเงิน");
+        } else if (currentOrderStatus.equals("ชำระเงินแล้ว")) {
+            advanceOrderStatusButton.setVisible(true);
+            advanceOrderStatusButton.setText("รอรับสินค้า");
+        } else if (currentOrderStatus.equals("รอรับสินค้า")) {
+            advanceOrderStatusButton.setVisible(true);
+            advanceOrderStatusButton.setText("รับสินค้าแล้ว");
+        } else if (currentOrderStatus.equals("รับสินค้าแล้ว") || currentOrderStatus.equals("ถูกปฏิเสธ")) {
+            advanceOrderStatusButton.setVisible(false);
+        }
+
+
+    }
     @FXML
     public void handleBackButton(ActionEvent actionEvent){
         try {
@@ -255,5 +375,19 @@ public class OrderManagementPageController {
         } catch (Exception err){
             System.out.println("Can't go to main");
         }
+    }
+
+    private void clearSelection(){
+        System.out.println("CLEARING SELECTION");
+        orderDetailTable.getItems().clear();
+        useMembershipLabel.setText("");
+        orderTotalQuantityLabel.setText("");
+        orderTotalPriceLabel.setText("");
+        queueLabel.setText("");
+
+    }
+    private void clearOrderTable(){
+        ordersTable.getSelectionModel().clearSelection();
+        ordersTable.getItems().clear();
     }
 }

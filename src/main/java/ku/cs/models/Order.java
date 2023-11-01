@@ -1,12 +1,13 @@
 package ku.cs.models;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Order {
     private int order_id;
     private double order_price;
     private int order_total_quantity;
-    private Timestamp order_dateTime;
+    private LocalDateTime order_dateTime;
     private String status;
     private String use_phone_number;
     private int queue_number;
@@ -66,5 +67,13 @@ public class Order {
 
     public void setQueue_number(int queue_number) {
         this.queue_number = queue_number;
+    }
+
+    public LocalDateTime getOrder_dateTime() {
+        return order_dateTime;
+    }
+
+    public void setOrder_dateTime(LocalDateTime order_dateTime) {
+        this.order_dateTime = order_dateTime;
     }
 }
