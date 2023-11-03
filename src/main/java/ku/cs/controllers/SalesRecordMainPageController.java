@@ -44,7 +44,7 @@ public class SalesRecordMainPageController {
     private void readDB(String readPrompt) {
 
         String query = "SELECT m.menu_id, m.menu_name, SUM(od.quantity) as total_quantity FROM orderdetails as od JOIN menus as m ON m.menu_id = od.menu_id " +
-                "JOIN orders as o ON o.order_id = od.order_id WHERE o.status != \"ยังไม่ชำระเงิน\" AND";
+                "JOIN orders as o ON o.order_id = od.order_id WHERE o.status != \"ยังไม่ชำระเงิน\" AND o.status != \"ถูกปฎิเสธ\" AND";
 
         if(readPrompt.equals("date")){
             query+=" Date(o.order_dateTime) = \"" + currentDatePicked.toString() + "\"";
