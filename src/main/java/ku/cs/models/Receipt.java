@@ -10,6 +10,7 @@ public class Receipt {
     private int queue_num;
     private int total_quantity;
     private double net_price;
+    private double discount_price;
     private String member_phone_number;
     private LocalDateTime receipt_dateTime;
     private LocalDate receipt_date;
@@ -71,6 +72,14 @@ public class Receipt {
 
     public void setNet_price(double net_price) {
         this.net_price = net_price;
+    }
+
+    public Double getDiscount_price() {
+        return discount_price;
+    }
+
+    public void setDiscount_price(double discount_price) {
+        this.discount_price = discount_price;
     }
 
     public String getMember_phone_number() {

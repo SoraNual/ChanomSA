@@ -14,9 +14,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ReceiptPageController {
@@ -90,11 +92,6 @@ public class ReceiptPageController {
                     int quantity = resultSet.getInt("quantity");
                     double orderPrice = resultSet.getDouble("total_price");
 
-
-                    queueLabel.setText("#"+ currentReceipt.getQueue_num());
-                    receiptTotalQuantityLabel.setText(currentReceipt.getTotal_quantity()+" แก้ว");
-                    netPriceLabel.setText(currentReceipt.getNet_price()+" บาท");
-
                     OrderAllDetail orderAllDetail = new OrderAllDetail(menuName,toppingName,quantity,orderPrice);
                     orderAllDetails.add(orderAllDetail);
 
@@ -135,14 +132,13 @@ public class ReceiptPageController {
                     Receipt newReceipt = new Receipt(receiptID, orderID, queueNum,netPrice);
                     newReceipt.setReceipt_dateTime(receiptDateTime);
                     newReceipt.setTotal_quantity(orderTotalQuantity);
-                    if(memPhoneNum != null){
-                        discountTextLabel.setVisible(true);
-                        discountPriceLabel.setText((orderPrice-netPrice)+"");
-                    }
+                    newReceipt.setMember_phone_number(memPhoneNum);
+                    newReceipt.setDiscount_price(orderPrice-netPrice);
+
                     receipts.add(newReceipt);
 
-                    System.out.println("orderID "+ orderID + " orderTotalQuantity " + orderTotalQuantity + " netPrice " +  netPrice + " DatePicked " + currentDatePicked +
-                            " queue " + queueNum + " DateTime " + receiptDateTime);
+                    System.out.println("orderID "+ orderID + " orderTotalQuantity " + orderTotalQuantity + " netPrice " +  netPrice +
+                            " บาท discount" + newReceipt.getDiscount_price() + " บาท " + " DatePicked " + currentDatePicked + " queue " + queueNum + " DateTime " + receiptDateTime);
                 }
 
                 resultSet.close();
@@ -303,6 +299,23 @@ public class ReceiptPageController {
         receiptsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             currentReceipt = newSelection;
             orderDetailTable.getItems().clear();
+
+            System.out.println(currentReceipt.getMember_phone_number() + currentReceipt.getDiscount_price());
+            if(currentReceipt.getMember_phone_number() != null){
+                System.out.println("has phone num");
+                discountTextLabel.setVisible(true);
+                discountPriceLabel.setText(currentReceipt.getDiscount_price()+"");
+            }else {
+                discountPriceLabel.setText("");
+                discountTextLabel.setVisible(false);
+            }
+
+            String s = currentReceipt.getReceipt_dateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            receiptDateTimeLabel.setText(s);
+            queueLabel.setText("#"+ currentReceipt.getQueue_num());
+            receiptTotalQuantityLabel.setText(currentReceipt.getTotal_quantity()+" แก้ว");
+            netPriceLabel.setText(currentReceipt.getNet_price()+" บาท");
+
             if(newSelection != null)
                 readDB("od");
         });
@@ -334,6 +347,8 @@ public class ReceiptPageController {
         System.out.println("CLEARING SELECTION");
         orderDetailTable.getItems().clear();
         receiptTotalQuantityLabel.setText("");
+        discountPriceLabel.setText("");
+        discountTextLabel.setVisible(false);
         queueLabel.setText("");
 
     }
