@@ -56,7 +56,7 @@ public class ReceiptPageController {
 
 
         handleReceiptsTable();
-        //readDB("o");
+
 
 
     }
@@ -295,7 +295,7 @@ public class ReceiptPageController {
 
 
     @FXML private void handleReceiptDatePicker(){
-        clearOrderTable();
+        clearReceiptTable();
         clearSelection();
 
         currentDatePicked = receiptDatePicker.getValue();
@@ -321,7 +321,7 @@ public class ReceiptPageController {
         queueLabel.setText("");
 
     }
-    private void clearOrderTable(){
+    private void clearReceiptTable(){
         receiptsTable.getSelectionModel().clearSelection();
         receiptsTable.getItems().clear();
     }

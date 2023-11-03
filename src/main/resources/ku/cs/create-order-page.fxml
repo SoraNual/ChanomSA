@@ -111,7 +111,7 @@
                <font>
                   <Font size="15.0" />
                </font></Button>
-            <Button layoutX="483.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleCocaoButton" prefHeight="40.0" prefWidth="90.0" text="โกโก้">
+            <Button layoutX="483.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleCacaoButton" prefHeight="40.0" prefWidth="90.0" text="โกโก้">
                <font>
                   <Font size="15.0" />
                </font></Button>

@@ -13,14 +13,11 @@ import javafx.scene.layout.Pane;
 import ku.cs.models.Menu;
 import ku.cs.models.Order;
 import ku.cs.models.OrderAllDetail;
-import ku.cs.models.OrderDetail;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CreateOrderPageController {
     // chooseMenuPane
@@ -675,7 +672,7 @@ public class CreateOrderPageController {
         updateDatabase();
     }
     @FXML
-    public void handleCocaoButton(ActionEvent actionEvent){
+    public void handleCacaoButton(ActionEvent actionEvent){
         typeToShow = "โกโก้";
         updateDatabase();
     }
