@@ -24,7 +24,7 @@
                      <columns>
                         <TableColumn fx:id="queueColumn" prefWidth="211.0" text="หมายเลขคิว" />
                         <TableColumn fx:id="orderTotalQuantityColumn" prefWidth="279.0" text="จำนวนแก้ว" />
-                        <TableColumn fx:id="orderDateTimeColumn" prefWidth="116.0" text="วันที่ เวลา" />
+                        <TableColumn fx:id="orderTimeColumn" prefWidth="116.0" text="วันที่ เวลา" />
                         <TableColumn fx:id="phoneColumn" prefWidth="216.0" text="เบอร์โทรศัพท์" />
                      </columns>
                      <columnResizePolicy>

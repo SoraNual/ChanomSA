@@ -71,6 +71,7 @@ public class MainPageController {
             com.github.saacsos.FXRouter.goTo("receipt");
         } catch (Exception err){
             System.out.println("Can't go to receiptPage");
+            err.printStackTrace();
         }
     }
     @FXML

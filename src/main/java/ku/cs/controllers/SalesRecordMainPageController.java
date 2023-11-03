@@ -44,14 +44,14 @@ public class SalesRecordMainPageController {
     private void readDB(String readPrompt) {
 
         String query = "SELECT m.menu_id, m.menu_name, SUM(od.quantity) as total_quantity FROM orderdetails as od JOIN menus as m ON m.menu_id = od.menu_id " +
-                "JOIN orders as o ON o.order_id = od.order_id ";
+                "JOIN orders as o ON o.order_id = od.order_id WHERE o.status != \"ยังไม่ชำระเงิน\" AND";
 
         if(readPrompt.equals("date")){
-            query+="WHERE Date(o.order_dateTime) = \"" + currentDatePicked.toString() + "\"";
+            query+=" Date(o.order_dateTime) = \"" + currentDatePicked.toString() + "\"";
         } else if (readPrompt.equals("month")) {
-            query+="WHERE MONTH(o.order_dateTime) = "+ currentDatePicked.getMonthValue() +  " AND YEAR(o.order_dateTime) = "+ currentDatePicked.getYear();
+            query+=" MONTH(o.order_dateTime) = "+ currentDatePicked.getMonthValue() +  " AND YEAR(o.order_dateTime) = "+ currentDatePicked.getYear();
         } else if (readPrompt.equals("year")) {
-            query+="WHERE YEAR(o.order_dateTime) = "+ currentDatePicked.getYear();
+            query+=" YEAR(o.order_dateTime) = "+ currentDatePicked.getYear();
         }
 
         query+=" GROUP BY m.menu_name ORDER BY total_quantity DESC;";

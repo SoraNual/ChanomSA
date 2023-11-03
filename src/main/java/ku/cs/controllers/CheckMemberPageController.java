@@ -47,6 +47,7 @@ public class CheckMemberPageController {
     @FXML private Button confirmButton;
     @FXML private Pane receiptPane;
     private Order currentOrder;
+    private int usedMemberId;
     private List<OrderAllDetail> orderAllDetails = new ArrayList<>();
 
     public void initialize() {
@@ -243,6 +244,7 @@ public class CheckMemberPageController {
                 checkMemberButton.setDisable(true);
                 confirmButton.disableProperty().unbind();
                 confirmButton.setDisable(false);
+                usedMemberId = memberID;
 
                 System.out.println(memberID+" "+memberName);
             }
@@ -271,13 +273,13 @@ public class CheckMemberPageController {
 
         if(checkStatusLabel.getText().equals("พบรายชื่อ")){
             currentOrder.setUse_phone_number(phoneNum);
-            String updatePhoneNum = "UPDATE orders SET use_phone_number = ? WHERE order_id = ?";
+            String updatePhoneNum = "UPDATE orders SET member_id = ? WHERE order_id = ?";
 
             try {
                 Connection connection = DatabaseConnection.getConnection();
 
                 PreparedStatement updateStatement = connection.prepareStatement(updatePhoneNum);
-                updateStatement.setString(1, phoneNum);
+                updateStatement.setInt(1, usedMemberId);
                 updateStatement.setInt(2, currentOrder.getOrder_id());
                 updateStatement.executeUpdate();
 

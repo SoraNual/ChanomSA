@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ReceiptPageController {
@@ -23,7 +24,7 @@ public class ReceiptPageController {
     private TableView<Receipt> receiptsTable;
     @FXML private TableColumn<Receipt, Integer> queueColumn;
     @FXML private TableColumn<Receipt, Integer> orderTotalQuantityColumn;
-    @FXML private TableColumn<Receipt, LocalDateTime> receiptDateTimeColumn;
+    @FXML private TableColumn<Receipt, LocalTime> receiptTimeColumn;
     @FXML private TableColumn<Receipt, Integer> receiptIdColumn;
     // Order Details table
     @FXML
@@ -50,9 +51,17 @@ public class ReceiptPageController {
     private final ArrayList<Receipt> receipts = new ArrayList<>();
     public void initialize() {
         queueLabel.setText("");
+        receiptDateTimeLabel.setText("");
+        discountTextLabel.setVisible(false);
+        discountPriceLabel.setText("");
+
 
         currentReceipt = receiptsTable.getSelectionModel().getSelectedItem();
         receiptTotalQuantityLabel.setText("");
+
+        receiptDatePicker.setValue(LocalDate.now());
+        handleReceiptDatePicker();
+
 
 
         handleReceiptsTable();
@@ -102,8 +111,9 @@ public class ReceiptPageController {
             updateOrderDetailsTable();
 
         } else if (readPrompt.equals("r")) {
-            String query = "SELECT r.receipt_id, r.order_id, r.queue_num, receipt_dateTime, r.net_price, o.order_total_quantity " +
-                    "FROM receipts as r JOIN orders as o ON o.order_id = r.order_id WHERE DATE(r.receipt_dateTime) = ?";
+            String query = "SELECT r.receipt_id, r.order_id, mb.member_phone_number, o.order_price, r.queue_num, receipt_dateTime, r.net_price, o.order_total_quantity " +
+                    "FROM receipts as r JOIN orders as o ON o.order_id = r.order_id LEFT JOIN members as mb ON mb.member_id = o.member_id " +
+                    "WHERE DATE(r.receipt_dateTime) = ?";
 
             try {
                 Connection connection = DatabaseConnection.getConnection();
@@ -115,14 +125,20 @@ public class ReceiptPageController {
                 while (resultSet.next()) {
                     int receiptID = resultSet.getInt("receipt_id");
                     int orderID = resultSet.getInt("order_id");
+                    String memPhoneNum = resultSet.getString("member_phone_number");
                     LocalDateTime receiptDateTime = resultSet.getTimestamp("receipt_dateTime").toLocalDateTime();
                     int orderTotalQuantity = resultSet.getInt("order_total_quantity");
                     int queueNum = resultSet.getInt("queue_num");
                     double netPrice = resultSet.getDouble("net_price");
+                    double orderPrice = resultSet.getDouble("order_price");
 
                     Receipt newReceipt = new Receipt(receiptID, orderID, queueNum,netPrice);
                     newReceipt.setReceipt_dateTime(receiptDateTime);
                     newReceipt.setTotal_quantity(orderTotalQuantity);
+                    if(memPhoneNum != null){
+                        discountTextLabel.setVisible(true);
+                        discountPriceLabel.setText((orderPrice-netPrice)+"");
+                    }
                     receipts.add(newReceipt);
 
                     System.out.println("orderID "+ orderID + " orderTotalQuantity " + orderTotalQuantity + " netPrice " +  netPrice + " DatePicked " + currentDatePicked +
@@ -231,11 +247,11 @@ public class ReceiptPageController {
                 }
             };
         });
-        receiptDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("receipt_dateTime"));
-        receiptDateTimeColumn.setCellFactory(column -> {
-            return new TableCell<Receipt, LocalDateTime>() {
+        receiptTimeColumn.setCellValueFactory(new PropertyValueFactory<>("receipt_time"));
+        receiptTimeColumn.setCellFactory(column -> {
+            return new TableCell<Receipt, LocalTime>() {
                 @Override
-                protected void updateItem(LocalDateTime item, boolean empty) {
+                protected void updateItem(LocalTime item, boolean empty) {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);

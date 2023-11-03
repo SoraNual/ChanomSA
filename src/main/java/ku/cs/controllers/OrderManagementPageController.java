@@ -12,7 +12,9 @@ import ku.cs.models.OrderAllDetail;
 import ku.cs.services.DatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class OrderManagementPageController {
@@ -20,7 +22,7 @@ public class OrderManagementPageController {
     @FXML private TableView<Order> ordersTable;
     @FXML private TableColumn<Order, Integer> queueColumn;
     @FXML private TableColumn<Order, Integer> orderTotalQuantityColumn;
-    @FXML private TableColumn<Order, LocalDateTime> orderDateTimeColumn;
+    @FXML private TableColumn<Order, LocalTime> orderTimeColumn;
     @FXML private TableColumn<Order, String> phoneColumn;
     // Order Details table
     @FXML
@@ -111,13 +113,15 @@ public class OrderManagementPageController {
             updateOrderDetailsTable();
 
         } else if (readPrompt.equals("o")) {
-            String query = "SELECT o.order_id, o.order_dateTime, o.order_total_quantity, o.use_phone_number, r.queue_num, r.net_price " +
-                    "FROM orders as o JOIN receipts as r ON r.order_id = o.order_id WHERE o.status = ?";
+            String query = "SELECT o.order_id, o.order_dateTime, o.order_total_quantity, mb.member_phone_number, r.queue_num, r.net_price " +
+                    "FROM orders as o JOIN receipts as r ON r.order_id = o.order_id LEFT JOIN members as mb ON mb.member_id = o.member_id " +
+                    "WHERE o.status = ? AND DATE(o.order_dateTime) = ?";
 
             try {
                 Connection connection = DatabaseConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, currentOrderStatus);
+                statement.setString(2, LocalDate.now().toString());
                 ResultSet resultSet = statement.executeQuery();
 
                 System.out.println("--Update Order Table--");
@@ -125,7 +129,7 @@ public class OrderManagementPageController {
                     int orderID = resultSet.getInt("order_id");
                     LocalDateTime orderDateTime = resultSet.getTimestamp("order_dateTime").toLocalDateTime();
                     int orderTotalQuantity = resultSet.getInt("order_total_quantity");
-                    String phoneNumber = resultSet.getString("use_phone_number");
+                    String phoneNumber = resultSet.getString("member_phone_number");
                     int queueNum = resultSet.getInt("queue_num");
                     double netPrice = resultSet.getDouble("net_price");
 
@@ -240,11 +244,11 @@ public class OrderManagementPageController {
                 }
             };
         });
-        orderDateTimeColumn.setCellValueFactory(new PropertyValueFactory<>("order_dateTime"));
-        orderDateTimeColumn.setCellFactory(column -> {
-            return new TableCell<Order, LocalDateTime>() {
+        orderTimeColumn.setCellValueFactory(new PropertyValueFactory<>("order_time"));
+        orderTimeColumn.setCellFactory(column -> {
+            return new TableCell<Order, LocalTime>() {
                 @Override
-                protected void updateItem(LocalDateTime item, boolean empty) {
+                protected void updateItem(LocalTime item, boolean empty) {
                     super.updateItem(item, empty);
                     if (item == null || empty) {
                         setText(null);
