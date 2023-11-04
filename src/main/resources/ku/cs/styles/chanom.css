@@ -1,14 +1,16 @@
 .root {
    -main-bkg-color: #8886FF;
+
  }
 
 .button {
-    -fx-background-color: #d9d9d9;
+
+    -fx-background-color: #E6E6FA;
     -fx-background-radius: 10px;
 }
 
 .button:hover {
-    -fx-background-color: #c7c5c5;
+    -fx-background-color: #ffdef0;
 }
 
 .button:pressed {
@@ -67,9 +69,6 @@
     -fx-background-color: #8b9fe4;
 }
 
-.tableview-receipt{
-    -fx-table-cell-border-color: transparent;
-}
 
 
 .table-view .column-header,

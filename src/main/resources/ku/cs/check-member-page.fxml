@@ -16,7 +16,7 @@
    <children>
       <Pane layoutY="60.0" prefHeight="660.0" prefWidth="1280.0" styleClass="pane-background">
          <children>
-            <Pane layoutX="516.0" layoutY="50.0" prefHeight="356.0" prefWidth="740.0" stylesheets="@styles/chanom.css">
+            <Pane layoutX="516.0" layoutY="39.0" prefHeight="356.0" prefWidth="740.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />
@@ -75,7 +75,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="24.0" layoutY="50.0" prefHeight="558.0" prefWidth="479.0" stylesheets="@styles/chanom.css">
+            <Pane layoutX="24.0" layoutY="39.0" prefHeight="558.0" prefWidth="479.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />
@@ -110,7 +110,7 @@
                   </Pane>
                </children>
             </Pane>
-            <Pane fx:id="receiptPane" layoutX="516.0" layoutY="421.0" prefHeight="189.0" prefWidth="740.0">
+            <Pane fx:id="receiptPane" layoutX="516.0" layoutY="410.0" prefHeight="189.0" prefWidth="740.0">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />

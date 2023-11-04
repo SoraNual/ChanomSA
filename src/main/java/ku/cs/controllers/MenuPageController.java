@@ -115,7 +115,7 @@ public class MenuPageController {
 
         detailButtonColumn.setCellFactory(column -> {
             return new TableCell<Menu, String>() {
-                final Button button = new Button("See");
+                final Button button = new Button("ดู");
 
                 {
                     button.setOnAction(event -> {

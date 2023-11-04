@@ -72,7 +72,7 @@ public class ToppingPageController {
         });
         detailButtonColumn.setCellFactory(column -> {
             return new TableCell<Topping, String>() {
-                final Button button = new Button("See");
+                final Button button = new Button("ดู");
 
                 {
                     button.setOnAction(event -> {

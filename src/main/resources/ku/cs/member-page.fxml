@@ -13,32 +13,34 @@
    <children>
       <Pane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background">
          <children>
-            <Pane layoutX="194.0" layoutY="165.0" prefHeight="518.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
+            <Pane layoutX="194.0" layoutY="105.0" prefHeight="578.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />
                </styleClass>
-               <children>
-                  <Label layoutX="41.0" layoutY="23.0" text="รายชื่อสมาชิกทั้งหมด">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-               </children>
             </Pane>
-            <TableView fx:id="memberTable" layoutX="224.0" layoutY="231.0" prefHeight="420.0" prefWidth="991.0" styleClass="rounded" stylesheets="@styles/chanom.css">
+            <TableView fx:id="memberTable" layoutX="224.0" layoutY="131.0" prefHeight="520.0" prefWidth="991.0" styleClass="rounded" stylesheets="@styles/chanom.css">
               <columns>
                 <TableColumn fx:id="IDColumn" editable="false" prefWidth="116.0" resizable="false" text="ID" />
                 <TableColumn fx:id="nameColumn" editable="false" prefWidth="490.0" resizable="false" text="ชื่อ-นามสกุล" />
                   <TableColumn fx:id="phoneColumn" editable="false" prefWidth="387.0" resizable="false" text="เบอร์โทรศัพท์" />
               </columns>
             </TableView>
-            <Button layoutX="26.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="146.0" text="เพิ่มสมาชิก" />
+            <Button layoutX="35.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="127.0" text="เพิ่มสมาชิก">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
-      <Pane layoutY="-3.0" prefHeight="151.0" prefWidth="1280.0" styleClass="pane-top">
+      <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top">
          <children>
-            <Button layoutX="24.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="56.0" prefWidth="146.0" text="&lt; กลับ" />
-         </children></Pane>
+            <Label layoutX="179.0" layoutY="4.0" text="รายชื่อสมาชิกทั้งหมด" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.AddMemberPageController">
    <children>
       <Pane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background">
          <children>
-            <Pane layoutX="194.0" layoutY="165.0" prefHeight="518.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
+            <Pane layoutX="116.0" layoutY="133.0" prefHeight="518.0" prefWidth="1049.0" stylesheets="@styles/chanom.css">
                <styleClass>
                   <String fx:value="pane-frame" />
                   <String fx:value="rounded" />
@@ -21,7 +20,7 @@
                <children>
                   <TextField fx:id="nameTextField" layoutX="279.0" layoutY="173.0" prefHeight="44.0" prefWidth="595.0" promptText="ชื่อ-นามสกุล" />
                   <TextField fx:id="phoneTextField" layoutX="279.0" layoutY="278.0" prefHeight="44.0" prefWidth="595.0" promptText="เบอร์โทรศัพท์ 10 หลัก" />
-                  <Label fx:id="errorLabel" alignment="CENTER" layoutX="372.0" layoutY="351.0" prefHeight="17.0" prefWidth="371.0" text="ERRORLABEL" textFill="RED" />
+                  <Label fx:id="errorLabel" alignment="CENTER" layoutX="339.0" layoutY="354.0" prefHeight="17.0" prefWidth="371.0" text="ERRORLABEL" textFill="RED" />
                   <Label layoutX="176.0" layoutY="181.0" text="ชื่อสมาชิก">
                      <font>
                         <Font size="18.0" />
@@ -32,21 +31,24 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="411.0" layoutY="67.0" text="เพิ่มรายชื่อสมาชิก">
+                  <Label layoutX="378.0" layoutY="67.0" text="เพิ่มรายชื่อสมาชิก">
                      <font>
                         <Font name="System Bold" size="37.0" />
                      </font>
                   </Label>
-                  <Button layoutX="484.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="44.0" prefWidth="146.0" text="เพิ่มรายชื่อ">
+                  <Button layoutX="451.0" layoutY="388.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="44.0" prefWidth="146.0" text="เพิ่มรายชื่อ">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Button layoutX="26.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="56.0" prefWidth="146.0" text="&lt; กลับ" />
          </children>
       </Pane>
-      <Pane prefHeight="151.0" prefWidth="1280.0" styleClass="pane-top" />
+      <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top">
+         <children>
+            <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

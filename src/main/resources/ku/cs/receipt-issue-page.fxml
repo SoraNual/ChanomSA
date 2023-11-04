@@ -32,7 +32,7 @@
                   </Label>
                   <Button layoutX="615.0" layoutY="14.0" mnemonicParsing="false" onAction="#handlePrintReceiptButton" prefHeight="35.0" prefWidth="97.0" text="พิมพ์ใบเสร็จ" />
                   <Label alignment="CENTER" layoutX="257.0" layoutY="133.0" prefHeight="17.0" prefWidth="228.0" text="---------------------------------------------" />
-                  <TableView fx:id="orderDetailTable1" layoutX="201.0" layoutY="159.0" prefHeight="320.0" prefWidth="338.0" style="-fx-background-color: transparent;">
+                  <TableView fx:id="orderDetailTable1" layoutX="201.0" layoutY="159.0" prefHeight="320.0" prefWidth="338.0">
                      <columns>
                         <TableColumn fx:id="orderDetailQuantityColumn1" prefWidth="48.0" resizable="false" sortable="false" text="จำนวน" />
                         <TableColumn fx:id="orderDetailMenuNameColumn1" editable="false" prefWidth="116.0" resizable="false" sortable="false" text="เมนู" />
