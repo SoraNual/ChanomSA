@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="pane-background" stylesheets="@styles/chanom.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.MenuPageController">
    <children>
@@ -20,6 +22,11 @@
       <Pane prefHeight="60.0" prefWidth="1280.0" styleClass="pane-top" stylesheets="@styles/chanom.css">
          <children>
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="100.0" text="ย้อนกลับ" />
+            <Label layoutX="137.0" layoutY="4.0" text="เมนูทั้งหมด" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Button layoutX="500.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleAllButton" prefHeight="40.0" prefWidth="90.0" text="ทั้งหมด" />
