@@ -61,8 +61,8 @@ public class ReceiptPageController {
         currentReceipt = receiptsTable.getSelectionModel().getSelectedItem();
         receiptTotalQuantityLabel.setText("");
 
-        receiptDatePicker.setValue(LocalDate.now());
-        handleReceiptDatePicker();
+        /*receiptDatePicker.setValue(LocalDate.now());
+        handleReceiptDatePicker();*/
 
 
 
