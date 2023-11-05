@@ -57,11 +57,11 @@ public class ReceiptIssuePageController {
 
         queueLabel.setText(currentOrder.getQueue_number()+"");
 
-        orderTotalQuantityLabel.setText(currentOrder.getOrder_total_quantity()+"");
-        receiptTotalQuantityLabel.setText(currentOrder.getOrder_total_quantity()+"");
+        orderTotalQuantityLabel.setText(currentOrder.getOrder_total_quantity()+" แก้ว");
+        receiptTotalQuantityLabel.setText(currentOrder.getOrder_total_quantity()+" แก้ว");
 
-        orderTotalPriceLabel.setText(currentOrder.getOrder_price()+"");
-        netPriceLabel.setText(currentOrder.getOrder_price()+"");
+        orderTotalPriceLabel.setText(currentOrder.getOrder_price()+" บาท");
+        netPriceLabel.setText(currentOrder.getOrder_price()+" บาท");
 
         discountPriceLabel.setText("");
         discountTextLabel.setVisible(false);
@@ -126,10 +126,10 @@ public class ReceiptIssuePageController {
 
                     queueLabel.setText("#"+queueNum);
                     receiptDateTimeLabel.setText(s);
-                    netPriceLabel.setText(netPrice+"");
+                    netPriceLabel.setText(netPrice+" บาท");
                     if(!currentOrder.getUse_phone_number().isBlank()){
                         discountTextLabel.setVisible(true);
-                        discountPriceLabel.setText((currentOrder.getOrder_price()-netPrice)+"");
+                        discountPriceLabel.setText((currentOrder.getOrder_price()-netPrice)+" บาท");
                     }
 
                     System.out.println(queueNum+": "+s+" "+netPrice);

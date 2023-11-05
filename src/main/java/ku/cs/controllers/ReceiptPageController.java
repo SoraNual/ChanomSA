@@ -56,6 +56,7 @@ public class ReceiptPageController {
         receiptDateTimeLabel.setText("");
         discountTextLabel.setVisible(false);
         discountPriceLabel.setText("");
+        netPriceLabel.setText("");
 
 
         currentReceipt = receiptsTable.getSelectionModel().getSelectedItem();
@@ -304,7 +305,7 @@ public class ReceiptPageController {
             if(currentReceipt.getMember_phone_number() != null){
                 System.out.println("has phone num");
                 discountTextLabel.setVisible(true);
-                discountPriceLabel.setText(currentReceipt.getDiscount_price()+"");
+                discountPriceLabel.setText(currentReceipt.getDiscount_price()+" บาท");
             }else {
                 discountPriceLabel.setText("");
                 discountTextLabel.setVisible(false);
