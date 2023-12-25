@@ -31,7 +31,7 @@
          <font>
             <Font size="48.0" />
          </font></Button>
-      <Button layoutX="1037.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleMemberPageButton" prefHeight="85.0" prefWidth="155.0" text="รายชื่อสมาชิก">
+      <Button layoutX="1037.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleMemberPageButton" prefHeight="85.0" prefWidth="155.0" text="สมาชิก">
          <font>
             <Font size="14.0" />
          </font></Button>

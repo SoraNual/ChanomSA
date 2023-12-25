@@ -45,11 +45,13 @@ public class AddToppingPageController {
         try {
             name = nameTextField.getText();
             if (Objects.equals(name, "")){
-                notificationLabel.setText("กรอกชื่อท็อปปิ้ง");return;
+                System.out.println("กรอกชื่อท็อปปิ้ง");
+                notificationLabel.setText("กรอกข้อมูลไม่ครบ");return;
             }
         }
         catch (Exception err){
-            notificationLabel.setText("กรอกชื่อท็อปปิ้ง");
+            System.out.println("กรอกชื่อท็อปปิ้ง");
+            notificationLabel.setText("กรอกข้อมูลไม่ครบ");
             return;
         }
         try {
@@ -58,16 +60,16 @@ public class AddToppingPageController {
             System.out.println("Price as a double: " + price);
             if (price < 0 ){
 
-                notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
+                notificationLabel.setText("ราคาไม่ถูกต้อง");
                 System.out.println("Input Error");
                 return;
             }
             if (Objects.equals(priceString, "")){
-                notificationLabel.setText("กรอกราคา");
+                notificationLabel.setText("กรอกข้อมูลไม่ครบ");
                 return;
             }
         } catch (NumberFormatException e) {
-            notificationLabel.setText("กรอกราคาท็อปปิ้ง");
+            notificationLabel.setText("ราคาไม่ถูกต้อง");
             return;
         }
 

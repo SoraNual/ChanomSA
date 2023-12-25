@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import ku.cs.models.Order;
 import ku.cs.models.OrderAllDetail;
 import ku.cs.models.QueueNumber;
@@ -234,6 +235,7 @@ public class CheckMemberPageController {
                 memberName = resultSet.getString("member_name");
 
                 nameLabel.setText(memberName);
+                checkStatusLabel.setTextFill(Color.GREEN);
                 checkStatusLabel.setText("พบรายชื่อ");
 
                 notUseOfferRadio.setDisable(true);
@@ -249,6 +251,7 @@ public class CheckMemberPageController {
                 System.out.println(memberID+" "+memberName);
             }
             if(checkStatusLabel.getText().equals("")) {
+                checkStatusLabel.setTextFill(Color.RED);
                 checkStatusLabel.setText("ไม่พบรายชื่อ");
                 nameLabel.setText("");
             }

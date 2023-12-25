@@ -58,12 +58,14 @@ public class AddMenuPageController {
         try {
             name = nameTextField.getText();
             if (Objects.equals(name, "")){
-                notificationLabel.setText("กรอกชื่อเมนู");
+                System.out.println("กรอกชื่อเมน");
+                notificationLabel.setText("กรอกข้อมูลไม่ครบ");
                 return;
             }
         }
         catch (Exception err){
-            notificationLabel.setText("กรอกชื่อเมนู");
+            System.out.println("กรอกชื่อเมน");
+            notificationLabel.setText("กรอกข้อมูลไม่ครบ");
             return;
 
         }
@@ -72,13 +74,18 @@ public class AddMenuPageController {
              type = typeComboBox.getValue().toString();
         }
         catch (Exception err){
-            notificationLabel.setText("กรอกประเภทเมนู");
+            System.out.println("กรอกประเภทเมนู");
+            notificationLabel.setText("กรอกข้อมูลไม่ครบ");
             return;
 
         }
 
 
         try {
+            if(priceTextField.getText().isBlank()){
+                System.out.println("กรอกราคาเมนู");
+                notificationLabel.setText("กรอกข้อมูลไม่ครบ");
+            }
             price = Double.parseDouble(priceTextField.getText());
             String priceString = priceTextField.getText();
             System.out.println("Price as a double: " + price);
@@ -89,8 +96,8 @@ public class AddMenuPageController {
                 return;
             }
         } catch (NumberFormatException e) {
-
-            notificationLabel.setText("กรอกราคาเมนู");
+            System.out.println("กรอกราคาเมนู");
+            notificationLabel.setText("ระบุราคาไม่ถูกต้อง");
             System.err.println("Invalid price format: " + priceTextField.getText());
             return;
         }

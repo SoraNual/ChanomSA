@@ -66,8 +66,8 @@
                         <String fx:value="rounded" />
                      </styleClass>
                   </Pane>
-                  <Button fx:id="advanceOrderStatusButton" layoutX="356.0" layoutY="504.0" mnemonicParsing="false" onAction="#handleAdvanceOrderStatusChangeButton" prefHeight="40.0" prefWidth="100.0" styleClass="button-confirm" text="advanceButton" />
-                  <Button fx:id="cancelOrderButton" layoutX="240.0" layoutY="504.0" mnemonicParsing="false" onAction="#handleCancelOrderStatusChangeButton" prefHeight="40.0" prefWidth="100.0" styleClass="button-cancel" text="ปฏิเสธ" />
+                  <Button fx:id="advanceOrderStatusButton" layoutX="327.0" layoutY="504.0" mnemonicParsing="false" onAction="#handleAdvanceOrderStatusChangeButton" prefHeight="40.0" prefWidth="129.0" styleClass="button-confirm" text="advanceButton" />
+                  <Button fx:id="cancelOrderButton" layoutX="184.0" layoutY="504.0" mnemonicParsing="false" onAction="#handleCancelOrderStatusChangeButton" prefHeight="40.0" prefWidth="129.0" styleClass="button-cancel" text="ปฏิเสธ" />
                </children>
             </Pane>
             <ComboBox fx:id="orderStatusComboBox" layoutX="1098.0" layoutY="23.0" onAction="#handleOrderStatusComboBox" prefHeight="40.0" prefWidth="137.0" styleClass="rounded" />

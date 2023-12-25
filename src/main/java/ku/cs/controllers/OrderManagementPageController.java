@@ -362,7 +362,7 @@ public class OrderManagementPageController {
             advanceOrderStatusButton.setText("ยืนยันการชำระเงิน");
         } else if (currentOrderStatus.equals("ชำระเงินแล้ว")) {
             advanceOrderStatusButton.setVisible(true);
-            advanceOrderStatusButton.setText("รอรับสินค้า");
+            advanceOrderStatusButton.setText("ยืนยันการทำออร์เดอร์");
         } else if (currentOrderStatus.equals("รอรับสินค้า")) {
             advanceOrderStatusButton.setVisible(true);
             advanceOrderStatusButton.setText("รับสินค้าแล้ว");

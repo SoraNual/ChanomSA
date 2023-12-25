@@ -26,9 +26,9 @@
                   <TableColumn fx:id="phoneColumn" editable="false" prefWidth="387.0" resizable="false" text="เบอร์โทรศัพท์" />
               </columns>
             </TableView>
-            <Button layoutX="35.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="127.0" text="เพิ่มสมาชิก">
+            <Button layoutX="25.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="56.0" prefWidth="152.0" text="เพิ่มรายชื่อสมาชิก">
                <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font></Button>
          </children>
       </Pane>

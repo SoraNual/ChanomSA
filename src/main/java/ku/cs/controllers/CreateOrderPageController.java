@@ -256,10 +256,11 @@ public class CreateOrderPageController {
             while (resultSet.next()) {
                 int menuId = resultSet.getInt("menu_id");
                 String menuName = resultSet.getString("menu_name");
+                String menuType = resultSet.getString("menu_type");
                 double menuPrice = resultSet.getDouble("menu_price");
-                menu.add(new Menu(menuId,typeToShow, menuName, menuPrice));
+                menu.add(new Menu(menuId,menuType, menuName, menuPrice));
 
-                System.out.println(typeToShow+" "+menuName+" "+menuPrice);
+                System.out.println(menuType+" "+menuName+" "+menuPrice);
             }
 
             menuTable.setItems(FXCollections.observableList(menu));

@@ -36,9 +36,9 @@
                         <Font name="System Bold" size="37.0" />
                      </font>
                   </Label>
-                  <Button layoutX="451.0" layoutY="388.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="44.0" prefWidth="146.0" text="เพิ่มรายชื่อ">
+                  <Button layoutX="437.0" layoutY="388.0" mnemonicParsing="false" onAction="#handleAddMemberButton" prefHeight="44.0" prefWidth="175.0" text="เพิ่มรายชื่อสมาชิก">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                </children>
